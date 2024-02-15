@@ -1,22 +1,50 @@
-PImage personnageImg;
+Mouse myMouse;
+Personnage myPersonnage;
+PImage persoFaceImg;
 PImage mapImg;
 PImage mouseImg;
-int mana;
-int life;
-boolean gameStatus;
+boolean gameStatus = true;
 
 void setup(){
   hint(ENABLE_KEY_REPEAT);
   size(1000, 600, P2D);
   
-  mouseImg = loadImage("glove3.png");
+  mouseImg = loadImage("../image/mouse.png");
+  myMouse = new Mouse(mouseImg);
+  
+  persoFaceImg = loadImage("../image/persoFace.png");
+  myPersonnage = new Personnage("Zel", (width-persoFaceImg.width/2), height-persoFaceImg.height-12, persoFaceImg);
 }
 
 void draw(){
-
-  
+  cursor(myMouse.img);
+  if (gameStatus == true) {
+      image (myPersonnage.img, myPersonnage.posX, myPersonnage.posY);
+    // ajuster l'affichage pour éviter les effets escaliers
+    fill(#F5F065);
+    textSize(60);
+    textAlign(LEFT);
+    //text("Score : " + str(score), 0, 50);
+    
+    fill(#DE1975);
+    textSize(60);
+    textAlign(RIGHT);
+    //text("Vies : " + str(lives), width, 50);
+    
+    }
 }
 
 void keyPressed(){
-
+  if (keyCode == LEFT) {
+   myPersonnage.posX -= myPersonnage.speed;
+  }
+  else if (keyCode == RIGHT){
+   myPersonnage.posX += myPersonnage.speed;
+  }
+  else if (keyCode == UP){
+   myPersonnage.posY -= myPersonnage.speed; 
+  }
+  else if (keyCode == DOWN){
+   myPersonnage.posY += myPersonnage.speed; 
+  }
 }
