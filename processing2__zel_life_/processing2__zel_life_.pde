@@ -18,6 +18,7 @@ void setup(){
 
 void draw(){
   cursor(myMouse.img);
+  background(#FCFCFC);
   if (gameStatus == true) {
       image (myPersonnage.img, myPersonnage.posX, myPersonnage.posY);
     // ajuster l'affichage pour éviter les effets escaliers
