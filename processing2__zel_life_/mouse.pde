@@ -3,9 +3,7 @@ class Mouse {
   PImage img;
   float speed = 30;
   
-  Mouse(int posX, int posY, PImage img){
-    this.posX = posX;
-    this.posY = posY;
+  Mouse(PImage img){
     this.img = img;
   }
 }

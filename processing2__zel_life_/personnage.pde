@@ -5,7 +5,7 @@ class Personnage {
   int atk = 10;
   int def = 10;
   PImage img;
-  int speed = 5;
+  int speed = 10;
   float posX, posY;
   
   Personnage(String nom, float posX, float posY, PImage img){

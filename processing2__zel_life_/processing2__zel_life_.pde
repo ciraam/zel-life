@@ -1,8 +1,14 @@
 Mouse myMouse;
 Personnage myPersonnage;
+Donjon myDonjon;
+Monstre myMonstre;
+Boss myBoss;
 PImage persoFaceImg;
 PImage mapImg;
+PImage donjonImg;
 PImage mouseImg;
+PImage bossDonjonImg;
+PImage monstreDonjonImg;
 boolean gameStatus = true;
 
 void setup(){
@@ -14,21 +20,35 @@ void setup(){
   
   persoFaceImg = loadImage("../image/persoFace.png");
   myPersonnage = new Personnage("Zel", (width-persoFaceImg.width/2), height-persoFaceImg.height-12, persoFaceImg);
+  
+  donjonImg = loadImage("../image/donjon.png");
+  myDonjon = new Donjon(donjonImg);
+  donjonImg.resize(1000,600);
+  
+  monstreDonjonImg = loadImage("../image/monstreFace.png");
+  myMonstre = new Monstre("Squelette", 100, 100, monstreDonjonImg);
+  
+  bossDonjonImg = loadImage("../image/boss.png");
+  myBoss = new Boss("Roi squellete", 120, 120, bossDonjonImg);
 }
 
 void draw(){
   cursor(myMouse.img);
-  background(#FCFCFC);
+  background(myDonjon.img);
+  
   if (gameStatus == true) {
-      image (myPersonnage.img, myPersonnage.posX, myPersonnage.posY);
-      fill(#F5F065);
-      textSize(60);
-      textAlign(LEFT);
+      image(myMonstre.img, myMonstre.posX, myMonstre.posY);
+      image(myBoss.img, myBoss.posX, myBoss.posY);
+      image(myPersonnage.img, myPersonnage.posX, myPersonnage.posY);
+      
+      //fill(#F5F065);
+      //textSize(60);
+      //textAlign(LEFT);
       //text("Score : " + str(score), 0, 50);
       
-      fill(#DE1975);
-      textSize(60);
-      textAlign(RIGHT);
+      //fill(#DE1975);
+      //textSize(60);
+      //textAlign(RIGHT);
       //text("Vies : " + str(lives), width, 50);
     
     }
