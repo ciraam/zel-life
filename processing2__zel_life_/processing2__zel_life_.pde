@@ -35,19 +35,17 @@ PImage reprendreMenuImg;
 PImage reprendreSurvolImg;
 boolean gameStatus = true;  // ne pas toucher pour le bon fonctionnement du jeu
 int etat = 4;  // ne pas toucher pour le bon fonctionnement du jeu
-long timerMilli = 0;
-long timerSec = 0;
-long timerMin = 0;
+int timerMilli;
+long timerSeconde;
+long timerMin;
 int lifeBoss;
 int lifePersonnage;
 
 void setup(){
   hint(ENABLE_KEY_REPEAT);
   size(1000, 600, P2D);
-  timerMilli = millis();
-  timerSec = second();
-  timerMin = minute();
-  
+  timerMilli = millis();  // ne pas toucher pour le bon fonctionnement du jeu, permet d'éviter le bug*
+
   menuPrincipal = loadImage("../image/menuPrincipal1.png");
   menuTitre = loadImage("../image/titre.gif", "gif");
   menuPrincipalJouer = loadImage("../image/jouer.png");
@@ -102,27 +100,34 @@ void draw(){
     menuPause(etat);
     if (testColisionMenu() == 3){
           image(reprendreSurvolImg, myMenuJouer.posX, myMenuJouer.posY);
-          //println("Reprendre");
           if (testColisionMenu() == 3 && mousePressed == true){
             etat = 2;
           }
      }
      if (testColisionMenu() == 4){
-          image(myMenuSurvol.img, myMenuSurvol.posX, myMenuSurvol.posY);
-          //println("Menu principal");
-          if ( millis() - timerMilli > 1685 ) {  // en milliseconde 1000 = 1s
-            if ((testColision4(int(myMenuSurvol.posX),int(myMenuSurvol.posY)) == 2 && mousePressed == true)){  // différent car bidouillage pour éviter en très majeure partie du temps le bug*
-              gameStatus = false;  // *bug qui fait que si on fait jouer puis retour menu principale la 1ère fois on quitte directement le jeu sans retourner au menu principal
+          image(myMenuSurvol.img, myMenuSurvol.posX, myMenuSurvol.posY); 
+          if (millis() - timerMilli > 150) {  // en milliseconde 1000 = 1s
+           /* if ((testColision4(int(myMenuSurvol.posX),int(myMenuSurvol.posY)) == 2 && mousePressed == true)){  //  différent car bidouillage pour éviter en très majeure partie du temps le bug*
+              gameStatus = false;  //  *bug (ou conflit) qui fait que si on fait jouer puis pause puis retour menu principal on quitte directement le jeu sans retourner au menu principal
+            } */
+            if ((testColisionMenu() == 4 && mousePressed == true)){
+              gameStatus = false;
               //println("Quitter");
-            }
-          }
-      }
+            } 
+            timerMilli = millis();  // ne pas toucher pour le bon fonctionnement du jeu, permet d'éviter le bug*
+          } 
+      } 
   }
   if (gameStatus == true && etat == 2) {
        menuPause(etat);
+       timerMin = minute();  
+       timerSeconde = second();
   }
   if (gameStatus == true && etat == 3) {
        menuPause(etat);
+       timerMin = minute();  
+       timerSeconde = second();
+       timerMilli = millis();  // ne pas toucher pour le bon fonctionnement du jeu, permet d'éviter le bug*
        if (testColision4(int(myMenuReprendre.posX), int(myMenuReprendre.posY)) == 2){
             image(reprendreSurvolImg, myMenuReprendre.posX, myMenuReprendre.posY);
             //println("Reprendre");
@@ -137,9 +142,11 @@ void draw(){
                   etat = 4;
               }
          }
+         
   }
   if (gameStatus == true && etat == 5) {
        menuPause(etat);
+       timerMilli = millis();  // ne pas toucher pour le bon fonctionnement du jeu, permet d'éviter le bug*
        if (testColisionMortMenu() == 1){
              image(myMenuSurvol2.img, myMenuReprendreMenu2.posX, myMenuReprendreMenu2.posY);
              //println("Menu principal");
@@ -150,11 +157,12 @@ void draw(){
   }
   if (gameStatus == true && etat == 6) {
        menuPause(etat);
+       timerMin = minute();  
+       timerSeconde = second();
   }
   if (gameStatus == false) {  // à voir pour rajouter une confirmation oui/non
        menuPause(etat = 1);
   }
-  //menuPrincipal(gameStatus);  // pas sur mais peut être une des sources du bug*
 }
 void keyPressed(){
   if (myPersonnage.stop == true){ 
@@ -446,6 +454,8 @@ int menuPause(int etat){
   if (etat == 2){ // donjon
       etat = 2; 
       myMonstre.speed = 10; // permet remise en marche du monstre
+      myMonstre2.speed = 10; // permet remise en marche du monstre2
+      myMonstre3.speed = 10; // permet remise en marche du monstre3
       myPersonnage.stop = true; // permet remise en marche du personnage
       background(myDonjon.img);
       //image(donjonImg, 0, 0); 
@@ -459,13 +469,11 @@ int menuPause(int etat){
               
       // personnage
       //println(lifePersonnage);
-      fill(#FFFFFF);
-      textSize(30);
-      text("Vie :  " + lifePersonnage + "/" + myPersonnage.life, 10, 30);
+      myPersonnage.afficherVie();
               
       // monstre 
       myMonstre.deplacementMonstre();
-      myMonstre2.deplacementMonstre(); // ne marche pas
+      myMonstre2.deplacementMonstre(); // ne marche pas 
       myMonstre3.deplacementMonstre(); // ne marche pas
       
       myMonstre.afficherNomVie();
@@ -474,23 +482,19 @@ int menuPause(int etat){
       
       if (myMonstre.life == 0 && myMonstre2.life == 0 && myMonstre3.life == 0) {
           image(myDonjonPorteOuverte.img, 0, 415);
-      }
+      } 
       
       return etat;
   }
   if (etat == 3){ // pause 
         etat = 3;
         //noLoop();
-        //println("x : ", myMouse.posX);
-        //println("y : ", myMouse.posY);
-        //println("Pause");
         myMonstre.speed = 0; // permet l'arrêt du monstre
         myMonstre2.speed = 0; // permet l'arrêt du monstre
         myMonstre3.speed = 0; // permet l'arrêt du monstre
         myBoss.speed = 0; // permet l'arrêt du boss
         myPersonnage.stop = false; // permet l'arrêt du personnage
         cursor(myMouse.img);
-        //tint(200, 70);
         image(fondBlancOpaq, 0, 0);
         fill(#FFFFFF);
         textSize(60);
@@ -498,7 +502,7 @@ int menuPause(int etat){
         text("Pause", 500, 100);
         textAlign(LEFT);
         textSize(30);
-        text("Temps passé en jeu : " + str(int(timerMin)) + "min " + str(int(timerSec)) + "s", 600, 50);
+        text("Temps passé en jeu : " + str(int(timerMin)) + "min " + str(int(timerSeconde)) + "s", 600, 50);
         image(myMenuReprendre.img, myMenuReprendre.posX, myMenuReprendre.posY);
         image(myMenuReprendreMenu.img, myMenuReprendreMenu.posX, myMenuReprendreMenu.posY);
         
@@ -506,28 +510,20 @@ int menuPause(int etat){
   }
   if (etat == 4){ // menu principal
         etat = 4;
-        //println("Pause");
         myMonstre.speed = 0; // permet l'arrêt du monstre
         myMonstre2.speed = 0; // permet l'arrêt du monstre
         myMonstre3.speed = 0; // permet l'arrêt du monstre
         myBoss.speed = 0; // permet l'arrêt du boss
         myPersonnage.stop = false; // permet l'arrêt du personnage
         cursor(myMouse.img);
-        //tint(200, 70);
         background(menuPrincipal);
         image(menuTitre, 310, 100);
-        //fill(#FFFFFF);
-        //textSize(35);
-        //textAlign(CENTER);
-        //text("Menu principale", 500, 215);
-        //println("menu principal");
         image(myMenuJouer.img, myMenuJouer.posX, myMenuJouer.posY);
         image(myMenuQuitter.img, myMenuQuitter.posX, myMenuQuitter.posY);
         
         return etat;
   }
   if (etat == 5){ // mort personnage
-        //myPersonnage.img = loadImage("../image/mort.png");
         //println("Vous êtes mort");
         //noLoop();
         etat = 5;
@@ -537,9 +533,6 @@ int menuPause(int etat){
         textSize(50);
         textAlign(CENTER);
         text("Vous êtes mort", 505, 200);
-        textAlign(LEFT);
-        textSize(30);
-        text("Temps passé en jeu : " + str(int(timerMin)) + "min  " + str(int(timerSec)) + "s", 600, 50);
         image(myMenuReprendreMenu2.img, myMenuReprendreMenu2.posX, myMenuReprendreMenu2.posY);
         
         // permet de "reload" le jeu
@@ -558,8 +551,6 @@ int menuPause(int etat){
       myBoss.speed = 10; // permet remise en marche du boss
       myPersonnage.stop = true; // permet remise en marche du personnage
       background(myDonjonBoss.img);
-      //image(donjonImg, 0, 0); 
-      //image(myMonstre.img, myMonstre.posX, myMonstre.posY);
       image(myBoss.img, myBoss.posX, myBoss.posY);
       image(myPersonnage.img, myPersonnage.posX, myPersonnage.posY);
       cursor(mouseNoCursorImg);
@@ -567,13 +558,10 @@ int menuPause(int etat){
               
       // personnage
       //println(lifePersonnage);
-      fill(#FFFFFF);
-      textSize(30);
-      text("Vie :  " + lifePersonnage + "/" + myPersonnage.life, 10, 30);
+      myPersonnage.afficherVie();
               
       // boss
       myBoss.deplacementBoss();
-      //println(lifeMonstre); 
       myBoss.afficherNomVie();
       
       return etat;

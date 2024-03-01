@@ -5,6 +5,7 @@ class Boss {
   PImage img;
   int speed = 10;
   float posX, posY;
+  int timerMil = millis();  // ne pas toucher pour le bon fonctionnement du jeu
   
   Boss(String nom, float posX, float posY, PImage img){
     this.nom = nom;
@@ -16,7 +17,7 @@ class Boss {
   // fonction déplacement boss
   void deplacementBoss(){ 
     if (lifeBoss > 0) { 
-      if ( millis() - timerMilli > 1500 ) {  // en milliseconde 1000 = 1s
+      if (millis() - this.timerMil > 1300) {  // en milliseconde 1000 = 1s
            //println(int(random(1,5));
            switch(int(random(1,5))) {
               case 1:
@@ -81,13 +82,13 @@ class Boss {
                 break;
             }
         
-        timerMilli = millis(); // commenter cette ligne pour le "rage mode" ahaha
+        this.timerMil = millis(); // commenter cette ligne pour le "rage mode" ahaha
       }
-      } else {
-         myBoss.img = loadImage("../image/mort.png");
-         myBoss.posX = 1000000000;
-         myBoss.posY = 1000000000;
-         //println("Monstre tué");
+    } else {
+        myBoss.img = loadImage("../image/mort.png");
+        myBoss.posX = 1000000000;
+        myBoss.posY = 1000000000;
+        //println("Monstre tué");
     }
   }
   void afficherNomVie() {

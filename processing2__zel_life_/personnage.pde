@@ -13,4 +13,9 @@ class Personnage {
     this.posY = posY;
     this.img = img;
   }
+  void afficherVie() {
+      fill(#FFFFFF);
+      textSize(30);
+      text("Vie :  " + lifePersonnage + "/" + myPersonnage.life, 10, 30);
+  }
 }

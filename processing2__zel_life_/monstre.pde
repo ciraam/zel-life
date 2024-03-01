@@ -5,7 +5,7 @@ class Monstre {
   PImage img;
   int speed = 10;
   float posX, posY;
-  float chiffre = random(1,5);  // ne pas toucher pour le bon fonctionnement du jeu
+  int timerMil = millis();  // ne pas toucher pour le bon fonctionnement du jeu
   
   Monstre(String nom, float posX, float posY, PImage img){
     this.nom = nom;
@@ -17,9 +17,9 @@ class Monstre {
   // fonction déplacement monstre
   void deplacementMonstre(){ 
     if (this.life > 0) { 
-      if ( millis() - timerMilli > 1500 ) {  // en milliseconde 1000 = 1s
+      if (millis() - this.timerMil > 1150) {  // en milliseconde 1000 = 1s
            //println(int(random(1,5)));
-           switch(int(chiffre)) {
+           switch(int(random(1,5))) {
               case 1:
                 if (testColision2(int(this.posX - this.speed), int(this.posY)) == 0){ 
                    this.posX -= this.speed;  // gauche
@@ -82,7 +82,7 @@ class Monstre {
                 break;
             }
         
-        timerMilli = millis(); // commenter cette ligne pour le "rage mode" ahaha
+        this.timerMil = millis(); // commenter cette ligne pour le "rage mode" ahaha
       }
       } else {
          this.img = loadImage("../image/mort.png");

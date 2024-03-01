@@ -18,7 +18,7 @@ class Tir {
     y+=vy;
     x+=vx;
   }
-}
+} 
 
 // A VOIR POUR FAIRE TIRER LE BOSS
 // Pas sur de mettre la classe, pas une priorité /!\
