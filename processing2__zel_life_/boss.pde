@@ -16,65 +16,65 @@ class Boss {
   
   // fonction déplacement boss
   void deplacementBoss(){ 
-    if (lifeBoss > 0) { 
+    if (this.life > 0) { 
       if (millis() - this.timerMil > 1300) {  // en milliseconde 1000 = 1s
            //println(int(random(1,5));
            switch(int(random(1,5))) {
               case 1:
-                if (testColision2(int(myBoss.posX - myBoss.speed), int(myBoss.posY)) == 0){ 
-                   myBoss.posX -= myBoss.speed;  // gauche
+                if (testColision2(int(this.posX - this.speed), int(this.posY)) == 0){ 
+                   this.posX -= this.speed;  // gauche
                    //myBoss.img = loadImage("../image/monstreGauche.png");
-                   if (testColision2(int(myBoss.posX - myBoss.speed), int(myBoss.posY)) == 2){ 
+                   if (testColision5(int(myBoss.posX - myBoss.speed), int(this.posY)) == 2){ 
                      //println("dégât");
-                     lifePersonnage = lifePersonnage - myBoss.atk;
+                     lifePersonnage = lifePersonnage - this.atk;
                      myPersonnage.img = loadImage("../image/persoDegat.png");
                   }
                 }
                 
                 break;
               case 2: 
-                if (testColision2(int(myBoss.posX + myBoss.speed), int(myBoss.posY)) == 0){ 
-                   myBoss.posX +=  myBoss.speed; // droite
+                if (testColision2(int(this.posX + this.speed), int(this.posY)) == 0){ 
+                   this.posX +=  this.speed; // droite
                    //myBoss.img = loadImage("../image/monstreDroite.png");
-                   if (testColision2(int(myBoss.posX + myBoss.speed), int(myBoss.posY)) == 2){ 
+                   if (testColision5(int(this.posX + this.speed), int(this.posY)) == 2){ 
                      //println("dégât");
-                     lifePersonnage = lifePersonnage - myBoss.atk;
+                     lifePersonnage = lifePersonnage - this.atk;
                      myPersonnage.img = loadImage("../image/persoDegat.png");
                   }
                 }
                 
                 break;
               case 3:
-                if (testColision2(int(myBoss.posX), int(myBoss.posY - myBoss.speed)) == 0){ 
-                   myBoss.posY -=  myBoss.speed;  // haut
+                if (testColision2(int(this.posX), int(this.posY - this.speed)) == 0){ 
+                   this.posY -=  this.speed;  // haut
                    //myBoss.img = loadImage("../image/monstreDos.png");
-                   if (testColision2(int(myBoss.posX), int(myBoss.posY - myBoss.speed)) == 2){ 
+                   if (testColision5(int(this.posX), int(this.posY - this.speed)) == 2){ 
                      //println("dégât");
-                     lifePersonnage = lifePersonnage - myBoss.atk;
+                     lifePersonnage = lifePersonnage - this.atk;
                      myPersonnage.img = loadImage("../image/persoDegat.png");
                   }
                 }
                 
                 break;
               case 4: 
-                if (testColision2(int(myBoss.posX), int(myBoss.posY + myBoss.speed)) == 0){ 
-                    myBoss.posY +=  myBoss.speed;  // bas
+                if (testColision2(int(this.posX), int(this.posY + this.speed)) == 0){ 
+                    this.posY +=  this.speed;  // bas
                     //myBoss.img = loadImage("../image/monstreFace.png");
-                    if (testColision2(int(myBoss.posX), int(myBoss.posY + myBoss.speed)) == 2){ 
+                    if (testColision5(int(this.posX), int(this.posY + this.speed)) == 2){ 
                      //println("dégât");
-                     lifePersonnage = lifePersonnage - myBoss.atk;
+                     lifePersonnage = lifePersonnage - this.atk;
                      myPersonnage.img = loadImage("../image/persoDegat.png");
                   }
                 }
                 
                 break;
                case 5:  // la même que case 4, car après test le 4 tombait trop peu souvent
-                if (testColision2(int(myBoss.posX), int(myBoss.posY + myBoss.speed)) == 0){ 
-                    myBoss.posY +=  myBoss.speed;  // bas
+                if (testColision2(int(this.posX), int(this.posY + this.speed)) == 0){ 
+                    this.posY +=  this.speed;  // bas
                     //myBoss.img = loadImage("../image/monstreFace.png");
-                    if (testColision2(int(myBoss.posX), int(myBoss.posY + myBoss.speed)) == 2){ 
+                    if (testColision5(int(this.posX), int(this.posY + this.speed)) == 2){ 
                      //println("dégât");
-                     lifePersonnage = lifePersonnage - myBoss.atk;
+                     lifePersonnage = lifePersonnage - this.atk;
                      myPersonnage.img = loadImage("../image/persoDegat.png");
                   }
                 }
@@ -85,9 +85,9 @@ class Boss {
         this.timerMil = millis(); // commenter cette ligne pour le "rage mode" ahaha
       }
     } else {
-        myBoss.img = loadImage("../image/mort.png");
-        myBoss.posX = 1000000000;
-        myBoss.posY = 1000000000;
+        this.img = loadImage("../image/mort.png");
+        this.posX = 1000000000;
+        this.posY = 1000000000;
         //println("Monstre tué");
     }
   }
