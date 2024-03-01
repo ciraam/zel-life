@@ -49,8 +49,8 @@ void setup(){
   menuTitre = loadImage("../image/titre.gif", "gif");
   menuPrincipalJouer = loadImage("../image/jouer.png");
   menuPrincipalQuitter = loadImage("../image/quitter.png");
-  fondBlancOpaq = loadImage("../image/fondBlanc.png");
-  fondBlancOpaq.resize(1000,600);
+  fondBlancOpaq = loadImage("../image/fondBlanc1.png");
+//  fondBlancOpaq.resize(1000,600);
   reprendreImg = loadImage("../image/reprendre.png");
   reprendreMenuImg = loadImage("../image/reprendreMenu.png");
   reprendreSurvolImg = loadImage("../image/reprendreSurvol.png");
@@ -93,6 +93,7 @@ void setup(){
 void draw(){
   myMouse.posX = pmouseX;
   myMouse.posY = pmouseY;
+  //noTint();
   
   if (lifePersonnage == 0){
     etat = 5;
@@ -531,12 +532,13 @@ int menuPause(int etat){
         etat = 3;
         //noLoop();
         myMonstre.speed = 0; // permet l'arrêt du monstre
-        myMonstre2.speed = 0; // permet l'arrêt du monstre
-        myMonstre3.speed = 0; // permet l'arrêt du monstre
+        myMonstre2.speed = 0; // permet l'arrêt du monstre2
+        myMonstre3.speed = 0; // permet l'arrêt du monstre3
         myBoss.speed = 0; // permet l'arrêt du boss
         myPersonnage.stop = false; // permet l'arrêt du personnage
         cursor(myMouse.img);
-        image(fondBlancOpaq, 0, 0);
+     //   tint(200, 70);
+    //    image(fondBlancOpaq, 0, 0);
         fill(#FFFFFF);
         textSize(60);
         textAlign(CENTER);
@@ -552,8 +554,8 @@ int menuPause(int etat){
   if (etat == 4){ // menu principal
         etat = 4;
         myMonstre.speed = 0; // permet l'arrêt du monstre
-        myMonstre2.speed = 0; // permet l'arrêt du monstre
-        myMonstre3.speed = 0; // permet l'arrêt du monstre
+        myMonstre2.speed = 0; // permet l'arrêt du monstre2
+        myMonstre3.speed = 0; // permet l'arrêt du monstre3
         myBoss.speed = 0; // permet l'arrêt du boss
         myPersonnage.stop = false; // permet l'arrêt du personnage
         cursor(myMouse.img);
@@ -599,7 +601,6 @@ int menuPause(int etat){
       noCursor();
               
       // personnage
-      //println(lifePersonnage);
       myPersonnage.afficherVie();
               
       // boss
