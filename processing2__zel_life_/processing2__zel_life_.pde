@@ -21,6 +21,7 @@ PImage mapImg;
 PImage donjonImg;
 PImage donjonBossImg;
 PImage donjonPorteOuverteImg;
+PImage effetEauMagique;
 PImage mouseImg;
 PImage mouseNoCursorImg;
 PImage bossDonjonImg;
@@ -81,6 +82,7 @@ void setup(){
   myDonjonBoss = new Donjon(donjonBossImg);
   donjonBossImg.resize(1000,600);
   myDonjonPorteOuverte = new Donjon(donjonPorteOuverteImg);
+  effetEauMagique = loadImage("../image/effetEauMagique.png");
   
   monstreDonjonImg = loadImage("../image/monstreFace.png");
   myMonstre = new Monstre("Squelette", 1000000000, 1000000000, monstreDonjonImg);
@@ -490,7 +492,7 @@ int testColision5 (int xTest, int yTest){ // pour le boss
     if (yTest < 0 || yTest > height-50){
       return 1;
     }
-  /*  if (xTest > myPersonnage.posX - 50 && xTest < myPersonnage.posX + 50 && yTest > myPersonnage.posY - 90 && yTest < myPersonnage.posY + 40){   pas utile et non fonctionnel, à garder sous le coude
+  /*  if (xTest > myPersonnage.posX - 50 && xTest < myPersonnage.posX + 50 && yTest > myPersonnage.posY - 90 && yTest < myPersonnage.posY + 40){   pas utile (et non fonctionnel ?), à garder sous le coude
       return 2;  
     }                                                                                                             
     if (xTest > myPersonnage.posX - 14 && xTest < myPersonnage.posX + 103 && yTest > myPersonnage.posY - 28 && yTest < myPersonnage.posY + 58){ 
@@ -519,6 +521,12 @@ int testColisionZone(){ // pour changer de zone
     }
     if (990 > myPersonnage.posX - 45 && 990 < myPersonnage.posX + 45 && 400 > myPersonnage.posY - 45 && 400 < myPersonnage.posY + 45){  // colision porte donjon retour
       return 2;
+    }
+    return 0;
+}
+int testColisionEauMagique(){ // pour eau magique
+    if (837.5 > myPersonnage.posX - 55 && 837.5 < myPersonnage.posX + 30 && 85.5 > myPersonnage.posY - 15 && 85.5 < myPersonnage.posY + 50){  // colision eau magique
+      return 1;
     }
     return 0;
 }
@@ -571,9 +579,12 @@ int menuPause(int etat){
       image(myPersonnage.img, myPersonnage.posX, myPersonnage.posY);
       cursor(mouseNoCursorImg);
       noCursor();
+      
+      myDonjon.eauMagique();
               
       // personnage
       myPersonnage.afficherVie();
+      
               
       // monstre 
       myMonstre.deplacementMonstre();
@@ -662,9 +673,10 @@ int menuPause(int etat){
       background(myDonjonBoss.img);
       image(myBoss.img, myBoss.posX, myBoss.posY);
       image(myPersonnage.img, myPersonnage.posX, myPersonnage.posY);
-      
       cursor(mouseNoCursorImg);
       noCursor();
+      
+      myDonjonBoss.eauMagique();
               
       // personnage
       myPersonnage.afficherVie();
