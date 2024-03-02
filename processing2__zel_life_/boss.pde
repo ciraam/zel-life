@@ -24,7 +24,7 @@ class Boss {
               case 1:
                 if (testColision5(int(this.posX - this.speed), int(this.posY)) == 0){ 
                    this.posX -= this.speed;  // gauche
-                   //myBoss.img = loadImage("../image/monstreGauche.png");
+                   this.img = loadImage("../image/bossGauche.png");
                    if (testColision5(int(myBoss.posX - myBoss.speed), int(this.posY)) == 2){ 
                     // println("dégât1");
                      lifePersonnage = lifePersonnage - this.atk;
@@ -36,7 +36,7 @@ class Boss {
               case 2: 
                 if (testColision5(int(this.posX + this.speed), int(this.posY)) == 0){ 
                    this.posX +=  this.speed; // droite
-                   //myBoss.img = loadImage("../image/monstreDroite.png");
+                   this.img = loadImage("../image/boss.png");
                    if (testColision5(int(this.posX + this.speed), int(this.posY)) == 2){ 
                     // println("dégât2");
                      lifePersonnage = lifePersonnage - this.atk;
@@ -48,7 +48,6 @@ class Boss {
               case 3:
                 if (testColision5(int(this.posX), int(this.posY - this.speed)) == 0){ 
                    this.posY -=  this.speed;  // haut
-                   //myBoss.img = loadImage("../image/monstreDos.png");
                    if (testColision5(int(this.posX), int(this.posY - this.speed)) == 2){ 
                     // println("dégât3");
                      lifePersonnage = lifePersonnage - this.atk;
@@ -60,7 +59,6 @@ class Boss {
               case 4: 
                 if (testColision5(int(this.posX), int(this.posY + this.speed)) == 0){ 
                     this.posY +=  this.speed;  // bas
-                    //myBoss.img = loadImage("../image/monstreFace.png");
                     if (testColision5(int(this.posX), int(this.posY + this.speed)) == 2){ 
                    //  println("dégât4");
                      lifePersonnage = lifePersonnage - this.atk;
@@ -72,7 +70,6 @@ class Boss {
                case 5:  // la même que case 4, car après test le 4 tombait trop peu souvent
                 if (testColision5(int(this.posX), int(this.posY + this.speed)) == 0){ 
                     this.posY +=  this.speed;  // bas
-                    //myBoss.img = loadImage("../image/monstreFace.png");
                     if (testColision5(int(this.posX), int(this.posY + this.speed)) == 2){ 
                      //println("dégât4");
                      lifePersonnage = lifePersonnage - this.atk;

@@ -335,7 +335,7 @@ void keyPressed(){
            if (testColision3(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 5){ 
                //println("atck");
                myBoss.life -= myPersonnage.atk;
-              // myMonstre3.img = loadImage("../image/monstreDegat.png");
+               myBoss.img = loadImage("../image/bossDegat.png");
            }
       }
       if (key == 'z' || key == 'Z'){ // coup d'épée en haut
@@ -358,7 +358,7 @@ void keyPressed(){
             if (testColision3(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 5){ 
                //println("atck");
                myBoss.life -= myPersonnage.atk;
-               //myMonstre3.img = loadImage("../image/monstreDegat.png");
+               myBoss.img = loadImage("../image/bossDegat.png");
             }
       }
       if (key == 'd' || key == 'D'){ // coup d'épée en droite
@@ -381,7 +381,7 @@ void keyPressed(){
             if (testColision3(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 5){ 
                //println("atck");
                myBoss.life -= myPersonnage.atk;
-               //myMonstre3.img = loadImage("../image/monstreDegat.png");
+               myBoss.img = loadImage("../image/bossDegat.png");
             }
       }
       if (key == 's' || key == 'S'){ // coup d'épée en bas
@@ -404,7 +404,7 @@ void keyPressed(){
            if (testColision3(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 5){ 
               //println("atck");
               myBoss.life -= myPersonnage.atk;
-              //myMonstre3.img = loadImage("../image/monstreDegat.png");
+              myBoss.img = loadImage("../image/bossDegat.png");
            }
       }
     } else {  // mort personnage
