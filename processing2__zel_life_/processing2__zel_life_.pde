@@ -311,7 +311,7 @@ void keyPressed(){
            myPersonnage.img = loadImage("../image/persoDegat.png");
         }
       }
-      if (keyCode == ALT && etat != 5){  // pause
+      if (keyCode == ALT && etat != 5 && etat !=7){  // pause
         //println("Pause");
         etat = 3;
       }
