@@ -50,8 +50,8 @@ void setup(){
   menuTitre = loadImage("../image/titre.gif", "gif");
   menuPrincipalJouer = loadImage("../image/jouer.png");
   menuPrincipalQuitter = loadImage("../image/quitter.png");
-  fondBlancOpaq = loadImage("../image/fondBlanc1.png");
-//  fondBlancOpaq.resize(1000,600);
+  fondBlancOpaq = loadImage("../image/fondBlanc1.png"); // bug² affichage ou si ne bug pas, ne s'affiche pas comme il faut 
+
   reprendreImg = loadImage("../image/reprendre.png");
   reprendreMenuImg = loadImage("../image/reprendreMenu.png");
   reprendreSurvolImg = loadImage("../image/reprendreSurvol.png");
@@ -94,7 +94,7 @@ void setup(){
 void draw(){
   myMouse.posX = pmouseX;
   myMouse.posY = pmouseY;
-  //noTint();  
+  //noTint(); // bug² affichage ?
 
   if (lifePersonnage == 0){
     etat = 5;
@@ -600,15 +600,15 @@ int menuPause(int etat){
         myBoss.speed = 0; // permet l'arrêt du boss
         myPersonnage.stop = false; // permet l'arrêt du personnage
         cursor(myMouse.img);
-     //   tint(200, 70);
-    //    image(fondBlancOpaq, 0, 0);
+     //   tint(200, 70); bug² ?
+    //    image(fondBlancOpaq, 0, 0); bug² ?
         fill(#FFFFFF);
         textSize(60);
         textAlign(CENTER);
-        text("Pause", 500, 100);  // bug affichage ?
+        text("Pause", 500, 100);  // bug² affichage ?
         textAlign(LEFT);
         textSize(30);
-        text("Temps passé en jeu : " + str(int(timerMin)) + "min " + str(int(timerSeconde)) + "s", 600, 50);  // bug affichage ?
+        text("Temps passé en jeu : " + str(int(timerMin)) + "min " + str(int(timerSeconde)) + "s", 600, 50);  // bug² affichage ?
         image(myMenuReprendre.img, myMenuReprendre.posX, myMenuReprendre.posY);
         image(myMenuReprendreMenu.img, myMenuReprendreMenu.posX, myMenuReprendreMenu.posY);
         
@@ -631,10 +631,9 @@ int menuPause(int etat){
         return etat;
   }
   if (etat == 5){ // mort personnage
-        //println("Vous êtes mort");
-        //noLoop();
         etat = 5;
         
+        //println("Vous êtes mort");
         cursor(myMouse.img);
         background(0);
         fill(#FFFFFF);
