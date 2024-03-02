@@ -1,4 +1,4 @@
- //ArrayList<Tir> tir = new ArrayList<Tir>();
+//ArrayList<Tir> tir = new ArrayList<Tir>();  voir commentaire class Tir
 
 Mouse myMouse;
 Menu myMenuJouer;
@@ -101,14 +101,6 @@ void draw(){
   }
   if (gameStatus == true && etat == 4){
     menuPause(etat);
-  /*  myMonstre.posX = 1000000000;
-    myMonstre.posY = 1000000000;
-    myMonstre2.posX = 1000000000;
-    myMonstre2.posY = 1000000000;
-    myMonstre3.posX = 1000000000;
-    myMonstre3.posY = 1000000000;
-    myBoss.posX = 1000000000;
-    myBoss.posY = 1000000000; */
     if (testColisionMenu() == 3){
           image(reprendreSurvolImg, myMenuJouer.posX, myMenuJouer.posY);
           if (testColisionMenu() == 3 && mousePressed == true){
@@ -124,7 +116,7 @@ void draw(){
      }
      if (testColisionMenu() == 4){
           image(myMenuSurvol.img, myMenuSurvol.posX, myMenuSurvol.posY); 
-          if (millis() - timerMilli > 150) {  // en milliseconde 1000 = 1s
+          if (millis() - timerMilli > 133) {  // en milliseconde 1000 = 1s
            /* if ((testColision4(int(myMenuSurvol.posX),int(myMenuSurvol.posY)) == 2 && mousePressed == true)){  //  différent car bidouillage pour éviter en très majeure partie du temps le bug*
               gameStatus = false;  //  *bug (ou conflit) qui fait que si on fait jouer puis pause puis retour menu principal on quitte directement le jeu sans retourner au menu principal
             } */

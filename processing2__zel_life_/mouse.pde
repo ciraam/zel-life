@@ -4,7 +4,5 @@ class Mouse {
   
   Mouse(PImage img){
     this.img = img;
-    //this.posX = pmouseX;
-    //this.posY = pmouseY;
   }
 }
