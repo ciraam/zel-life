@@ -1,6 +1,6 @@
 class Monstre {
   String nom;
-  int life = 20;
+  int life = 50;
   int atk = 3;
   PImage img;
   int speed = 10;
@@ -18,8 +18,9 @@ class Monstre {
   void deplacementMonstre(){ 
     if (this.life > 0) { 
       if (millis() - this.timerMil > 1150) {  // en milliseconde 1000 = 1s
-           //println(int(random(1,5)));
-           switch(int(random(1,5))) {
+           int chiffre = int(random(1,5));
+          // println(chiffre);
+           switch(chiffre) {
               case 1:
                 if (testColision2(int(this.posX - this.speed), int(this.posY)) == 0){ 
                    this.posX -= this.speed;  // gauche
@@ -94,7 +95,7 @@ class Monstre {
   void afficherNomVie() {
       fill(#FFFFFF);
       textSize(13);
-      text(this.life + "/20", this.posX, this.posY - 10);
+      text(this.life + "/50", this.posX, this.posY - 10);
       
       fill(#FFFFFF);
       textSize(13);

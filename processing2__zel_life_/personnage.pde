@@ -1,7 +1,7 @@
 class Personnage {
   String nom;
   int life = 30;
-  int atk = 10;
+  int atk = 200;
   PImage img;
   int speed = 10;
   float posX, posY;
@@ -16,6 +16,6 @@ class Personnage {
   void afficherVie() {
       fill(#FFFFFF);
       textSize(30);
-      text("Vie :  " + lifePersonnage + "/" + myPersonnage.life, 10, 30);
+      text("Santé :  " + lifePersonnage + "/" + myPersonnage.life, 10, 30);
   }
 }
