@@ -1,7 +1,7 @@
 class Personnage {
   String nom;
   int life = 30;
-  int atk = 20;
+  int atk = 10;
   PImage img;
   int speed = 10;
   float posX, posY;
