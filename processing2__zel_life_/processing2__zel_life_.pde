@@ -15,8 +15,10 @@ Donjon myDonjonPorteOuverte;
 Monstre myMonstre;
 Monstre myMonstre2;
 Monstre myMonstre3;
+Pnj myPnjGuide;
 Boss myBoss;
 PImage persoFaceImg;
+PImage pnjGuideImg;
 PImage mapImg;
 PImage donjonImg;
 PImage donjonBossImg;
@@ -70,7 +72,8 @@ void setup(){
   myMouse = new Mouse(mouseImg);
   
   persoFaceImg = loadImage("../image/persoFace.png");
-  myPersonnage = new Personnage("Zel", 624, 20, persoFaceImg);
+  myPersonnage = new Personnage("Zel", persoFaceImg);
+ 
   // (width-persoFaceImg.width/2), height-persoFaceImg.height-12,
   lifePersonnage = myPersonnage.life;
   
@@ -85,12 +88,15 @@ void setup(){
   effetEauMagique = loadImage("../image/effetEauMagique.png");
   
   monstreDonjonImg = loadImage("../image/monstreFace.png");
-  myMonstre = new Monstre("Squelette", 1000000000, 1000000000, monstreDonjonImg);
-  myMonstre2 = new Monstre("Squelette", 1000000000, 1000000000, monstreDonjonImg);
-  myMonstre3 = new Monstre("Squelette", 1000000000, 1000000000, monstreDonjonImg); 
+  myMonstre = new Monstre("Squelette", monstreDonjonImg);
+  myMonstre2 = new Monstre("Squelette", monstreDonjonImg);
+  myMonstre3 = new Monstre("Squelette", monstreDonjonImg); 
   
   bossDonjonImg = loadImage("../image/boss.png");
-  myBoss = new Boss("Roi squelete", 1000000000, 1000000000, bossDonjonImg);
+  myBoss = new Boss("Roi squelete", bossDonjonImg);
+  
+  pnjGuideImg = loadImage("../image/pnjGuideFace.png");
+  myPnjGuide = new Pnj("Guide", pnjGuideImg);
 }
 
 void draw(){
@@ -114,6 +120,8 @@ void draw(){
             myMonstre2.posY = 250;
             myMonstre3.posX = 400;
             myMonstre3.posY = 400;
+            myPersonnage.posX = 622; // temporaire, à enlever quand map de départ commit
+            myPersonnage.posY = 20; // temporaire, à enlever quand map de départ commit
           }
      }
      if (testColisionMenu() == 4){
@@ -218,6 +226,9 @@ void keyPressed(){
            lifePersonnage = lifePersonnage - myBoss.atk;
            myPersonnage.img = loadImage("../image/persoDegat.png");
         }
+        if (testColision(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 6){ 
+          
+        }
         if (testColisionZone() == 1){
              //println("Zone");
              etat = 6;
@@ -253,6 +264,9 @@ void keyPressed(){
            lifePersonnage = lifePersonnage - myBoss.atk;
            myPersonnage.img = loadImage("../image/persoDegat.png");
         }
+        if (testColision(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 6){ 
+         
+        }
         if (testColisionZone() == 2){
              //println("Zone");
              etat = 2;
@@ -286,6 +300,9 @@ void keyPressed(){
            lifePersonnage = lifePersonnage - myBoss.atk;
            myPersonnage.img = loadImage("../image/persoDegat.png");
         }
+        if (testColision(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 6){ 
+
+        }
       }
       if (keyCode == DOWN){
         if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 0){ 
@@ -311,6 +328,9 @@ void keyPressed(){
            //println("dégât");
            lifePersonnage = lifePersonnage - myBoss.atk;
            myPersonnage.img = loadImage("../image/persoDegat.png");
+        }
+        if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 6){ 
+
         }
       }
       if (keyCode == ALT && etat != 5 && etat !=7){  // pause
@@ -445,6 +465,9 @@ int testColision (int xTest, int yTest){ // pour le personnage
         return 5;
       }
     }
+   if (xTest > myPnjGuide.posX - 20 && xTest < myPnjGuide.posX + 20 && yTest > myPnjGuide.posY - 40 && yTest < myPnjGuide.posY + 20){ // colision pnj
+      return 6;
+    }
     if (myMonstre.life > 0 && myMonstre2.life > 0 && myMonstre3.life > 0) {
       if (xTest > 0 - 40 && xTest < 0 + 40 && yTest > 415 - 40 && yTest < 415 + 40){ // colision porte donjon fermée tant que monstres en vie
         return 1;
@@ -459,7 +482,7 @@ int testColision2 (int xTest, int yTest){ // pour les monstres
     if (yTest < 0 || yTest > height-50){
       return 1;
     }
-    if (xTest > myPersonnage.posX - 25 && xTest < myPersonnage.posX + 25 && yTest > myPersonnage.posY - 45 && yTest < myPersonnage.posY + 20){  // colision personnage 
+    if (xTest > myPersonnage.posX - 30 && xTest < myPersonnage.posX + 30 && yTest > myPersonnage.posY - 45 && yTest < myPersonnage.posY + 45){  // colision personnage 
       return 2;
     }
     return 0;
@@ -499,6 +522,18 @@ int testColision5 (int xTest, int yTest){ // pour le boss
       return 2; 
     } */
     return 0;
+}
+int testColision6 (int xTest, int yTest){ // pour les pnj
+    if (xTest < 0 || xTest > width-50){
+      return 1;
+    }
+    if (yTest < 0 || yTest > height-50){
+      return 1;
+    }
+    if (xTest > myPersonnage.posX - 35 && xTest < myPersonnage.posX + 40 && yTest > myPersonnage.posY - 30 && yTest < myPersonnage.posY + 50){  // colision pnj 
+      return 2;
+    }
+      return 0;
 }
 int testColisionMenu(){ // pour menu principal
     if (myMenuJouer.posX > myMouse.posX - 195 && myMenuJouer.posX < myMouse.posX + 0 && myMenuJouer.posY > myMouse.posY - 75 && myMenuJouer.posY < myMouse.posY + 0){ // hitbox choix menu principal jouer
@@ -577,6 +612,7 @@ int menuPause(int etat){
       image(myMonstre2.img, myMonstre2.posX, myMonstre2.posY);
       image(myMonstre3.img, myMonstre3.posX, myMonstre3.posY);
       image(myPersonnage.img, myPersonnage.posX, myPersonnage.posY);
+      image(myPnjGuide.img, myPnjGuide.posX = 680, myPnjGuide.posY = 80);
       cursor(mouseNoCursorImg);
       noCursor();
       
@@ -585,6 +621,9 @@ int menuPause(int etat){
       // personnage
       myPersonnage.afficherVie();
       
+      // pnj
+      myPnjGuide.afficherNom();
+      myPnjGuide.conversationGuideDonjon();
               
       // monstre 
       myMonstre.deplacementMonstre();

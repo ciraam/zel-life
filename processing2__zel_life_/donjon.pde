@@ -1,5 +1,5 @@
 class Donjon {
-    int posX, posY;
+    float posX, posY;
     PImage img;
     int timerMil = millis();  // ne pas toucher pour le bon fonctionnement du jeu
     
@@ -12,7 +12,7 @@ class Donjon {
       //println("heal");
       if (lifePersonnage < 30){
         image(effetEauMagique, 832, 83);
-       }
+      }
       if (millis() - this.timerMil > 1200) {  // en milliseconde 1000 = 1s
         if (lifePersonnage < 30){
            lifePersonnage += 2;
@@ -25,7 +25,7 @@ class Donjon {
         }
         this.timerMil = millis();
       }
-     }
+    }
   }
   
 }

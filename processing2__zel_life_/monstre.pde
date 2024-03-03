@@ -7,10 +7,8 @@ class Monstre {
   float posX, posY;
   int timerMil = millis();  // ne pas toucher pour le bon fonctionnement du jeu
   
-  Monstre(String nom, float posX, float posY, PImage img){
+  Monstre(String nom, PImage img){
     this.nom = nom;
-    this.posX = posX;
-    this.posY = posY;
     this.img = img;
   }
   

@@ -7,10 +7,8 @@ class Personnage {
   float posX, posY;
   boolean stop = true;
   
-  Personnage(String nom, float posX, float posY, PImage img){
+  Personnage(String nom, PImage img){
     this.nom = nom;
-    this.posX = posX;
-    this.posY = posY;
     this.img = img;
   }
   void afficherVie() {
