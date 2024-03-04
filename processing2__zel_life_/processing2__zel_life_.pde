@@ -89,18 +89,17 @@ void setup(){
   effetEauMagique = loadImage("../image/effetEauMagique.png");
   
   monstreDonjonImg = loadImage("../image/monstreFace.png");
-  myMonstre = new Monstre("Squelette", monstreDonjonImg);
-  myMonstre2 = new Monstre("Squelette", monstreDonjonImg);
-  myMonstre3 = new Monstre("Squelette", monstreDonjonImg); 
+  myMonstre = new Monstre("Squelette", 10000000, 10000000, monstreDonjonImg);
+  myMonstre2 = new Monstre("Squelette", 10000000, 10000000, monstreDonjonImg);
+  myMonstre3 = new Monstre("Squelette", 10000000, 10000000, monstreDonjonImg); 
   
   bossDonjonImg = loadImage("../image/boss.png");
-  myBoss = new Boss("Roi squelete", bossDonjonImg);
+  myBoss = new Boss("Roi squelete", 10000000, 10000000, bossDonjonImg);
   
   pnjGuideImg = loadImage("../image/pnjGuideFace.png");
   myPnjGuide = new Pnj("Guide", pnjGuideImg);
   
   zoneDepartImg = loadImage("../image/MAP.png");
-  //zoneDepartImg.resize(1000, 600);
 }
 
 void draw(){
@@ -118,6 +117,8 @@ void draw(){
           if (testColisionMenu() == 3 && mousePressed == true){
             menuJeu(jeu = 4);
             etat = 8;
+            myPersonnage.posX = 600;
+            myPersonnage.posY = 550;
            /* menuJeu(jeu = 2);
             etat = 2;
             myMonstre.posX = 100;
@@ -162,6 +163,9 @@ void draw(){
              if (testColision4(int(myMenuReprendre.posX), int(myMenuReprendre.posY)) == 2 && mousePressed == true && jeu == 3){
                   etat = 6;
              }
+             if (testColision4(int(myMenuReprendre.posX), int(myMenuReprendre.posY)) == 2 && mousePressed == true && jeu == 4){
+                  etat = 8;
+             }
         }
         if (testColision4(int(myMenuReprendreMenu.posX), int(myMenuReprendreMenu.posY)) == 2){
              image(reprendreSurvolImg, myMenuReprendreMenu.posX, myMenuReprendreMenu.posY);
@@ -200,6 +204,12 @@ void draw(){
               }
         }
   }
+  if (gameStatus == true && etat == 8) {
+       menuPause(etat);
+       menuJeu(jeu = 4);
+       timerMin = minute();  
+       timerSeconde = second();
+  }
   if (gameStatus == false) {  // à voir pour rajouter une confirmation oui/non
        menuPause(etat = 1);
   }
@@ -235,7 +245,7 @@ void keyPressed(){
         if (testColision(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 6){ 
           
         }
-        if (testColisionZone() == 1){
+        if (testColisionZone() == 1 && etat == 2){
              //println("Zone");
              etat = 6;
              jeu = 3;
@@ -273,7 +283,7 @@ void keyPressed(){
         if (testColision(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 6){ 
          
         }
-        if (testColisionZone() == 2){
+        if (testColisionZone() == 2  && etat == 6){
              //println("Zone");
              etat = 2;
              jeu = 2;
@@ -474,7 +484,7 @@ int testColision (int xTest, int yTest){ // pour le personnage
    if (xTest > myPnjGuide.posX - 20 && xTest < myPnjGuide.posX + 20 && yTest > myPnjGuide.posY - 40 && yTest < myPnjGuide.posY + 20){ // colision pnj
       return 6;
     }
-    if (myMonstre.life > 0 && myMonstre2.life > 0 && myMonstre3.life > 0) {
+    if (myMonstre.life > 0 && myMonstre2.life > 0 && myMonstre3.life > 0 && etat == 2) {
       if (xTest > 0 - 40 && xTest < 0 + 40 && yTest > 415 - 40 && yTest < 415 + 40){ // colision porte donjon fermée tant que monstres en vie
         return 1;
       }
@@ -769,12 +779,12 @@ int menuPause(int etat){
       return etat; 
   }
   if (etat == 8){ // zone du départ
-      etat = 8; 
-      
+      etat = 8;
+       
       myPersonnage.stop = true; // permet remise en marche du personnage
       background(zoneDepartImg);
       image(myPersonnage.img, myPersonnage.posX, myPersonnage.posY);
-      image(myPnjGuide.img, myPnjGuide.posX = 680, myPnjGuide.posY = 400);
+      image(myPnjGuide.img, myPnjGuide.posX = 690, myPnjGuide.posY = 450);
       cursor(mouseNoCursorImg);
       noCursor();
               
@@ -782,7 +792,7 @@ int menuPause(int etat){
       myPersonnage.afficherVie();
               
       // png
-
+      myPnjGuide.conversationGuideDepart();
       
       if (myBoss.life == 0){
 
