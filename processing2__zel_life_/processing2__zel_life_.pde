@@ -36,6 +36,7 @@ PImage fondBlancOpaq;
 PImage reprendreImg;
 PImage reprendreMenuImg;
 PImage reprendreSurvolImg;
+PImage zoneDepartImg;
 boolean gameStatus = true;  // ne pas toucher pour le bon fonctionnement du jeu
 int etat = 4;  // ne pas toucher pour le bon fonctionnement du jeu
 int jeu;
@@ -97,6 +98,9 @@ void setup(){
   
   pnjGuideImg = loadImage("../image/pnjGuideFace.png");
   myPnjGuide = new Pnj("Guide", pnjGuideImg);
+  
+  zoneDepartImg = loadImage("../image/MAP.png");
+  //zoneDepartImg.resize(1000, 600);
 }
 
 void draw(){
@@ -112,7 +116,9 @@ void draw(){
     if (testColisionMenu() == 3){
           image(reprendreSurvolImg, myMenuJouer.posX, myMenuJouer.posY);
           if (testColisionMenu() == 3 && mousePressed == true){
-            menuJeu(jeu = 2);
+            menuJeu(jeu = 4);
+            etat = 8;
+           /* menuJeu(jeu = 2);
             etat = 2;
             myMonstre.posX = 100;
             myMonstre.posY = 100;
@@ -121,7 +127,7 @@ void draw(){
             myMonstre3.posX = 400;
             myMonstre3.posY = 400;
             myPersonnage.posX = 622; // temporaire, à enlever quand map de départ commit
-            myPersonnage.posY = 20; // temporaire, à enlever quand map de départ commit
+            myPersonnage.posY = 20; // temporaire, à enlever quand map de départ commit */
           }
      }
      if (testColisionMenu() == 4){
@@ -586,9 +592,12 @@ int menuJeu(int jeu){
       jeu = 2;
       return jeu;
   } 
-
   if (jeu == 3){ // donjon boss
       jeu = 3; 
+      return jeu;
+  }
+  if (jeu == 4){ // zone départ
+      jeu = 4; 
       return jeu;
   }
   return jeu;
@@ -758,6 +767,28 @@ int menuPause(int etat){
       myPersonnage.img = loadImage("../image/persoFace.png"); 
      
       return etat; 
+  }
+  if (etat == 8){ // zone du départ
+      etat = 8; 
+      
+      myPersonnage.stop = true; // permet remise en marche du personnage
+      background(zoneDepartImg);
+      image(myPersonnage.img, myPersonnage.posX, myPersonnage.posY);
+      image(myPnjGuide.img, myPnjGuide.posX = 680, myPnjGuide.posY = 400);
+      cursor(mouseNoCursorImg);
+      noCursor();
+              
+      // personnage
+      myPersonnage.afficherVie();
+              
+      // png
+
+      
+      if (myBoss.life == 0){
+
+      }
+      
+      return etat;
   }
   return etat;
 }
