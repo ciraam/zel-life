@@ -37,10 +37,12 @@ PImage reprendreImg;
 PImage reprendreMenuImg;
 PImage reprendreSurvolImg;
 PImage zoneDepartImg;
+PImage mannequinImg;
 boolean gameStatus = true;  // ne pas toucher pour le bon fonctionnement du jeu
 int etat = 4;  // ne pas toucher pour le bon fonctionnement du jeu
 int jeu;
 int timerMilli;
+int timerMilliMannequin;
 long timerSeconde;
 long timerMin;
 int lifePersonnage;
@@ -49,6 +51,7 @@ void setup(){
   hint(ENABLE_KEY_REPEAT);
   size(1000, 600, P2D);
   timerMilli = millis();  // ne pas toucher pour le bon fonctionnement du jeu, permet d'éviter le bug*
+  timerMilliMannequin = millis();
 
   menuPrincipal = loadImage("../image/menuPrincipal1.png");
   menuTitre = loadImage("../image/titre.gif", "gif");
@@ -100,6 +103,7 @@ void setup(){
   myPnjGuide = new Pnj("Guide", pnjGuideImg);
   
   zoneDepartImg = loadImage("../image/MAP.png");
+  mannequinImg = loadImage("../image/mannequin.png");
 }
 
 void draw(){
@@ -119,16 +123,6 @@ void draw(){
             etat = 8;
             myPersonnage.posX = 600;
             myPersonnage.posY = 550;
-           /* menuJeu(jeu = 2);
-            etat = 2;
-            myMonstre.posX = 100;
-            myMonstre.posY = 100;
-            myMonstre2.posX = 250;
-            myMonstre2.posY = 250;
-            myMonstre3.posX = 400;
-            myMonstre3.posY = 400;
-            myPersonnage.posX = 622; // temporaire, à enlever quand map de départ commit
-            myPersonnage.posY = 20; // temporaire, à enlever quand map de départ commit */
           }
      }
      if (testColisionMenu() == 4){
@@ -245,14 +239,19 @@ void keyPressed(){
         if (testColision(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 6){ 
           
         }
+        if (testColision(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 7){ 
+          
+        }
         if (testColisionZone() == 1 && etat == 2){
              //println("Zone");
              etat = 6;
              jeu = 3;
              myPersonnage.posX = 925;
              myPersonnage.posY = 400;
-             myBoss.posX = 120;
-             myBoss.posY = 120;
+             if (myBoss.life > 0 ){
+               myBoss.posX = 120;
+               myBoss.posY = 120;
+             }
          }
       }
       if (keyCode == RIGHT){
@@ -281,6 +280,9 @@ void keyPressed(){
            myPersonnage.img = loadImage("../image/persoDegat.png");
         }
         if (testColision(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 6){ 
+         
+        }
+        if (testColision(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 7){ 
          
         }
         if (testColisionZone() == 2  && etat == 6){
@@ -319,6 +321,31 @@ void keyPressed(){
         if (testColision(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 6){ 
 
         }
+        if (testColision(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 7){ 
+
+        }
+        if (testColisionZone() == 3  && etat == 8){
+             //println("Zone");
+             etat = 2;
+             jeu = 2;
+             myPersonnage.posX = 622;
+             myPersonnage.posY = 70;
+             if (myMonstre.life > 0 && myMonstre2.life > 0 && myMonstre3.life > 0){
+                myMonstre.posX = 100;
+                myMonstre.posY = 100;
+                myMonstre2.posX = 250;
+                myMonstre2.posY = 250;
+                myMonstre3.posX = 400;
+                myMonstre3.posY = 400;
+            }
+         }
+         if (testColisionZone() == 4  && etat == 2){
+             //println("Zone");
+             etat = 8;
+             jeu = 4;
+             myPersonnage.posX = 482;
+             myPersonnage.posY = 80;
+         }
       }
       if (keyCode == DOWN){
         if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 0){ 
@@ -348,6 +375,9 @@ void keyPressed(){
         if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 6){ 
 
         }
+        if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 7){ 
+
+        }
       }
       if (keyCode == ALT && etat != 5 && etat !=7){  // pause
         //println("Pause");
@@ -375,6 +405,10 @@ void keyPressed(){
                myBoss.life -= myPersonnage.atk;
                myBoss.img = loadImage("../image/bossDegat.png");
            }
+           if (testColision3(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 6){ 
+               //println("atck");
+               mannequinImg = loadImage("../image/mannequinDegat.png");
+           }
       }
       if (key == 'z' || key == 'Z'){ // coup d'épée en haut
            myPersonnage.img = loadImage("../image/swordDos.png");
@@ -397,6 +431,10 @@ void keyPressed(){
                //println("atck");
                myBoss.life -= myPersonnage.atk;
                myBoss.img = loadImage("../image/bossDegat.png");
+            }
+            if (testColision3(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 6){ 
+               //println("atck");
+               mannequinImg = loadImage("../image/mannequinDegat.png");
             }
       }
       if (key == 'd' || key == 'D'){ // coup d'épée en droite
@@ -421,6 +459,10 @@ void keyPressed(){
                myBoss.life -= myPersonnage.atk;
                myBoss.img = loadImage("../image/bossDegat.png");
             }
+            if (testColision3(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 6){ 
+               //println("atck");
+               mannequinImg = loadImage("../image/mannequinDegat.png");
+            }
       }
       if (key == 's' || key == 'S'){ // coup d'épée en bas
            myPersonnage.img = loadImage("../image/swordFace.png");
@@ -443,6 +485,10 @@ void keyPressed(){
               //println("atck");
               myBoss.life -= myPersonnage.atk;
               myBoss.img = loadImage("../image/bossDegat.png");
+           }
+           if (testColision3(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 6){ 
+              //println("atck");
+              mannequinImg = loadImage("../image/mannequinDegat.png");
            }
       }
     } else {  // mort personnage
@@ -484,6 +530,9 @@ int testColision (int xTest, int yTest){ // pour le personnage
    if (xTest > myPnjGuide.posX - 20 && xTest < myPnjGuide.posX + 20 && yTest > myPnjGuide.posY - 40 && yTest < myPnjGuide.posY + 20){ // colision pnj
       return 6;
     }
+    if (xTest > 810 - 25 && xTest < 810 + 50 && yTest > 240 - 40 && yTest < 240 + 25){ // colision mannequin
+      return 7;
+    }
     if (myMonstre.life > 0 && myMonstre2.life > 0 && myMonstre3.life > 0 && etat == 2) {
       if (xTest > 0 - 40 && xTest < 0 + 40 && yTest > 415 - 40 && yTest < 415 + 40){ // colision porte donjon fermée tant que monstres en vie
         return 1;
@@ -515,6 +564,9 @@ int testColision3 (int xTest, int yTest){ // pour les coups d'épée, range = 15
     }
     if (xTest > myBoss.posX - 29 && xTest < myBoss.posX + 121 && yTest > myBoss.posY - 48 && yTest < myBoss.posY + 78){ // hitbox coup d'épée  boss
       return 5;
+    }
+    if (xTest > 810 - 40 && xTest < 810 + 60 && yTest > 240 - 50 && yTest < 240 + 40){ // hitbox coup d'épée  mannequin
+      return 6;
     }
     return 0;
 }
@@ -567,11 +619,17 @@ int testColisionWinMortMenu(){ // pour mort et win
     return 0;
 }
 int testColisionZone(){ // pour changer de zone
-    if (0 > myPersonnage.posX - 45 && 0 < myPersonnage.posX + 45 && 415 > myPersonnage.posY - 45 && 415 < myPersonnage.posY + 45){  // colision porte donjon aller
+    if (0 > myPersonnage.posX - 45 && 0 < myPersonnage.posX + 45 && 415 > myPersonnage.posY - 45 && 415 < myPersonnage.posY + 45){  // colision porte donjon boss aller
       return 1;
     }
-    if (990 > myPersonnage.posX - 45 && 990 < myPersonnage.posX + 45 && 400 > myPersonnage.posY - 45 && 400 < myPersonnage.posY + 45){  // colision porte donjon retour
+    if (990 > myPersonnage.posX - 45 && 990 < myPersonnage.posX + 45 && 400 > myPersonnage.posY - 45 && 400 < myPersonnage.posY + 45){  // colision porte donjon boss retour
       return 2;
+    }
+    if (522 > myPersonnage.posX - 45 && 522 < myPersonnage.posX + 45 && 0-10 > myPersonnage.posY - 25 && 0 < myPersonnage.posY + 45){  // colision entrée donjon aller
+      return 3;
+    }
+    if (622 > myPersonnage.posX - 45 && 622 < myPersonnage.posX + 45 && 0-30 > myPersonnage.posY - 35 && 0 < myPersonnage.posY + 45){  // colision entrée donjon retour
+      return 4;
     }
     return 0;
 }
@@ -644,7 +702,7 @@ int menuPause(int etat){
       myPnjGuide.afficherNom();
       myPnjGuide.conversationGuideDonjon();
               
-      // monstre 
+      // monstre
       myMonstre.deplacementMonstre();
       myMonstre2.deplacementMonstre();
       myMonstre3.deplacementMonstre();
@@ -784,17 +842,23 @@ int menuPause(int etat){
       myPersonnage.stop = true; // permet remise en marche du personnage
       background(zoneDepartImg);
       image(myPersonnage.img, myPersonnage.posX, myPersonnage.posY);
+      image(mannequinImg, 810, 240);
       image(myPnjGuide.img, myPnjGuide.posX = 690, myPnjGuide.posY = 450);
       cursor(mouseNoCursorImg);
       noCursor();
               
       // personnage
-      myPersonnage.afficherVie();
-              
+      
+      // mannequin
+      if (millis() - timerMilliMannequin > 200) {  // en milliseconde 1000 = 1s
+                  mannequinImg = loadImage("../image/mannequin.png");
+                  timerMilliMannequin = millis();
+      }
+      
       // png
       myPnjGuide.conversationGuideDepart();
       
-      if (myBoss.life == 0){
+      if (myBoss.life == 0){ // pour peut petre le deuxième donjon
 
       }
       

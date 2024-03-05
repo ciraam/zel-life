@@ -20,7 +20,11 @@ class Pnj {
     if (testColision6(int(this.posX), int(this.posY)) == 2){
       image(loadImage("../image/bouttonF.png"), this.posX + 10, this.posY - 20);
       if (key == 'f' || key == 'F'){
-        image(loadImage("../image/pnjDialogue.png"), 160, 500);
+        image(loadImage("../image/pnjDialogue.png"), 160, 470);
+        textSize(15);
+        text("Aventurier, vous voilà maintenant dans le donjon du village !", 265, 500);
+        text("Derrière moi se trouve la particularité de notre village, l'eau magique.", 265, 525);
+        text("Allez-y donc vous requinquer après un combat contre les monstres !", 265, 550);
       }
     }
   }
