@@ -38,6 +38,7 @@ PImage reprendreImg;
 PImage reprendreMenuImg;
 PImage reprendreSurvolImg;
 PImage zoneDepartImg;
+PImage maisonInterieurImg;
 PImage mannequinImg;
 boolean gameStatus = true;  // ne pas toucher pour le bon fonctionnement du jeu
 int etat = 4;  // ne pas toucher pour le bon fonctionnement du jeu
@@ -105,6 +106,7 @@ void setup(){
   
   zoneDepartImg = loadImage("../image/MAP.png");
   mannequinImg = loadImage("../image/mannequin.png");
+  maisonInterieurImg = loadImage("../image/maison.png");
   
   aide = loadImage("../image/effetEauMagique.png");
 }
@@ -163,6 +165,12 @@ void draw(){
              if (testColision4(int(myMenuReprendre.posX), int(myMenuReprendre.posY)) == 2 && mousePressed == true && jeu == 4){
                   etat = 8;
              }
+             if (testColision4(int(myMenuReprendre.posX), int(myMenuReprendre.posY)) == 2 && mousePressed == true && jeu == 5){
+                  etat = 9;
+             }
+             if (testColision4(int(myMenuReprendre.posX), int(myMenuReprendre.posY)) == 2 && mousePressed == true && jeu == 6){
+                  etat = 10;
+             }
         }
         if (testColision4(int(myMenuReprendreMenu.posX), int(myMenuReprendreMenu.posY)) == 2){
              image(reprendreSurvolImg, myMenuReprendreMenu.posX, myMenuReprendreMenu.posY);
@@ -204,6 +212,18 @@ void draw(){
   if (gameStatus == true && etat == 8) {
        menuPause(etat);
        menuJeu(jeu = 4);
+       timerMin = minute();  
+       timerSeconde = second();
+  }
+  if (gameStatus == true && etat == 9) {
+       menuPause(etat);
+       menuJeu(jeu = 5);
+       timerMin = minute();  
+       timerSeconde = second();
+  }
+  if (gameStatus == true && etat == 10) {
+       menuPause(etat);
+       menuJeu(jeu = 6);
        timerMin = minute();  
        timerSeconde = second();
   }
@@ -396,6 +416,20 @@ void keyPressed(){
              myPersonnage.posY = 80;
              myPersonnage.img = loadImage("../image/persoFace.png");
          }
+         if (testColisionZone() == 5  && etat == 8){
+             //println("Zone");
+             etat = 9;
+             jeu = 5;
+             myPersonnage.posX = 497;
+             myPersonnage.posY = 350;
+         }
+         if (testColisionZone() == 7  && etat == 8){
+             //println("Zone");
+             etat = 10;
+             jeu = 6;
+             myPersonnage.posX = 497;
+             myPersonnage.posY = 350;
+         }
       }
       if (keyCode == DOWN){
         if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 0){ 
@@ -443,6 +477,20 @@ void keyPressed(){
         if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 12){ 
 
         }
+        if (testColisionZone() == 6 && etat == 9){
+             //println("Zone");
+             etat = 8;
+             jeu = 4;
+             myPersonnage.posX = 67;
+             myPersonnage.posY = 67;
+         }
+         if (testColisionZone() == 6 && etat == 10){
+             //println("Zone");
+             etat = 8;
+             jeu = 4;
+             myPersonnage.posX = 87;
+             myPersonnage.posY = 390;
+         }
       }
       if (keyCode == ALT && etat != 5 && etat !=7){  // pause
         //println("Pause");
@@ -566,28 +614,42 @@ void keyPressed(){
 
 // fonction colision
 int testColision (int xTest, int yTest){ // pour le personnage
+    if (etat == 9 || etat == 10){
+        if (xTest < 0 || xTest > width-370){
+          return 1;
+        }
+        if (yTest < 0 || yTest > height-215){
+          return 1;
+        }
+        if (xTest < 0 || xTest > width+200){
+          return 1;
+        }
+        if (yTest < 0 || yTest > height+150){
+          return 1;
+        }
+    }
     if (xTest < 0 || xTest > width-30){
       return 1;
     }
     if (yTest < 0 || yTest > height-50){
       return 1;
     }
-    if(myMonstre.life > 0){
+    if(myMonstre.life > 0 && etat ==2){
       if (xTest > myMonstre.posX - 25 && xTest < myMonstre.posX + 25 && yTest > myMonstre.posY - 45 && yTest < myMonstre.posY + 20){ // colision monstre
         return 2;
       }
     }
-    if(myMonstre2.life > 0){
+    if(myMonstre2.life > 0 && etat ==2){
       if (xTest > myMonstre2.posX - 25 && xTest < myMonstre2.posX + 25 && yTest > myMonstre2.posY - 45 && yTest < myMonstre2.posY + 20){ // colision monstre2
         return 3;
       }
     }
-    if(myMonstre3.life > 0){
+    if(myMonstre3.life > 0 && etat ==2){
       if (xTest > myMonstre3.posX - 25 && xTest < myMonstre3.posX + 25 && yTest > myMonstre3.posY - 45 && yTest < myMonstre3.posY + 20){ // colision monstre3
         return 4;
       }
     }
-    if (myBoss.life >0){
+    if (myBoss.life > 0 && etat == 6){
       if (xTest > myBoss.posX - 14 && xTest < myBoss.posX + 109 && yTest > myBoss.posY - 33 && yTest < myBoss.posY + 63){ // colision boss
         return 5;
       }
@@ -595,23 +657,25 @@ int testColision (int xTest, int yTest){ // pour le personnage
    if (xTest > myPnjGuide.posX - 20 && xTest < myPnjGuide.posX + 20 && yTest > myPnjGuide.posY - 40 && yTest < myPnjGuide.posY + 20){ // colision pnj
       return 6;
     }
-    if (xTest > 810 - 25 && xTest < 810 + 50 && yTest > 240 - 40 && yTest < 240 + 25){ // colision mannequin
-      return 7;
-    }
-    if (xTest > 50 - 60 && xTest < 50 + 80 && yTest > 265 - 45 && yTest < 265 + 85){ // colision maison zone départ en bas à gauche
-      return 8;
-    }
-    if (xTest > 50 - 60 && xTest < 50 + 45 && yTest > 0 - 30 && yTest < 0 + 30){ // colision maison zone départ en haut à gauche
-      return 9;
-    }
-    if (xTest > 495 - 60 && xTest < 495 + 45 && yTest > 0 - 30 && yTest < 0 + 30){ // colision donjon zone départ
-      return 10;
-    }
-    if (xTest > 750 - 90 && xTest < 750 + 45 && yTest > 0 - 80 && yTest < 0 + 60){ // colision maison juste à droite du donjon zone départ
-      return 11;
-    }
-    if (xTest > 950 - 65 && xTest < 950 + 45 && yTest > 60 - 80 && yTest < 60 + 30){ // colision maison en haut à droite zone départ
-      return 12;
+    if (etat == 8){
+      if (xTest > 810 - 25 && xTest < 810 + 50 && yTest > 240 - 40 && yTest < 240 + 25){ // colision mannequin
+        return 7;
+      }
+      if (xTest > 50 - 60 && xTest < 50 + 80 && yTest > 265 - 45 && yTest < 265 + 96){ // colision maison zone départ en bas à gauche
+        return 8;
+      }
+      if (xTest > 50 - 60 && xTest < 50 + 45 && yTest > 0 - 30 && yTest < 0 + 41){ // colision maison zone départ en haut à gauche
+        return 9;
+      }
+      if (xTest > 495 - 60 && xTest < 495 + 45 && yTest > 0 - 30 && yTest < 0 + 30){ // colision donjon zone départ
+        return 10;
+      }
+      if (xTest > 750 - 90 && xTest < 750 + 45 && yTest > 0 - 80 && yTest < 0 + 60){ // colision maison juste à droite du donjon zone départ
+        return 11;
+      }
+      if (xTest > 950 - 65 && xTest < 950 + 45 && yTest > 60 - 80 && yTest < 60 + 30){ // colision maison en haut à droite zone départ
+        return 12;
+      }
     }
     if (myMonstre.life > 0 && myMonstre2.life > 0 && myMonstre3.life > 0 && etat == 2) {
       if (xTest > 0 - 40 && xTest < 0 + 40 && yTest > 415 - 40 && yTest < 415 + 40){ // colision porte donjon fermée tant que monstres en vie
@@ -705,11 +769,23 @@ int testColisionZone(){ // pour changer de zone
     if (990 > myPersonnage.posX - 45 && 990 < myPersonnage.posX + 45 && 400 > myPersonnage.posY - 45 && 400 < myPersonnage.posY + 45){  // colision porte donjon boss retour
       return 2;
     }
-    if (495 > myPersonnage.posX - 30 && 495 < myPersonnage.posX + 30 && 0 +5 > myPersonnage.posY - 25 && 0 < myPersonnage.posY + 30){  // colision entrée donjon aller
+    if (495 > myPersonnage.posX - 30 && 495 < myPersonnage.posX + 30 && 0 +10 > myPersonnage.posY - 25 && 0 < myPersonnage.posY + 30){  // colision entrée donjon aller
       return 3;
     }
-    if (622 > myPersonnage.posX - 30 && 622 < myPersonnage.posX + 30 && 0-30 > myPersonnage.posY - 35 && 0 < myPersonnage.posY + 30){  // colision entrée donjon retour
+    if (622 > myPersonnage.posX - 30 && 622 < myPersonnage.posX + 30 && 0+10 > myPersonnage.posY - 25 && 0 < myPersonnage.posY + 30){  // colision entrée donjon retour
       return 4;
+    }
+    if (60 > myPersonnage.posX - 20 && 60 < myPersonnage.posX + 20 && 0 -15 > myPersonnage.posY - 25 && 0 < myPersonnage.posY + 30){  // colision entrée maison en haut à gauche aller
+      return 5;
+    }
+    if (495 > myPersonnage.posX - 20 && 495 < myPersonnage.posX + 20 && 400 +5 > myPersonnage.posY - 25 && 400 < myPersonnage.posY + 30){  // colision entrée maison en haut à gauche retour
+      return 6;
+    }
+    if (80 > myPersonnage.posX - 20 && 80 < myPersonnage.posX + 20 && 360 -10 > myPersonnage.posY - 25 && 360 < myPersonnage.posY + 30){  // colision entrée maison en bas à gauche aller
+      return 7;
+    }
+    if (490 > myPersonnage.posX - 20 && 490 < myPersonnage.posX + 20 && 400 +5 > myPersonnage.posY - 25 && 400 < myPersonnage.posY + 30){  // colision entrée maison en bas à gauche retour
+      return 8;
     }
     return 0;
 }
@@ -746,6 +822,14 @@ int menuJeu(int jeu){
   }
   if (jeu == 4){ // zone départ
       jeu = 4; 
+      return jeu;
+  }
+  if (jeu == 5){ // zone départ maison en haut à gauche
+      jeu = 5; 
+      return jeu;
+  }
+  if (jeu == 6){ // zone départ maison en bas à droite
+      jeu = 6; 
       return jeu;
   }
   return jeu;
@@ -924,7 +1008,7 @@ int menuPause(int etat){
       image(myPersonnage.img, myPersonnage.posX, myPersonnage.posY);
       image(mannequinImg, 810, 240);
       image(myPnjGuide.img, myPnjGuide.posX = 690, myPnjGuide.posY = 450);
-      image(aide, 50, 250);
+      image(aide, 70, 360);
       cursor(mouseNoCursorImg);
       noCursor();
               
@@ -940,9 +1024,40 @@ int menuPause(int etat){
       myPnjGuide.afficherNom();
       myPnjGuide.conversationGuideDepart();
       
-      if (myBoss.life == 0){ // pour peut etre le deuxième donjon
+      if (myBoss.life == 0){ // à finir
 
       }
+      
+      return etat;
+  }
+  if (etat == 9){ // zone du départ maison en haut à gauche
+      etat = 9; // à finir 
+       
+      myPersonnage.stop = true; // permet remise en marche du personnage
+      background(maisonInterieurImg);
+      image(myPersonnage.img, myPersonnage.posX, myPersonnage.posY);
+      image(aide, 490, 400);
+      cursor(mouseNoCursorImg);
+      noCursor();
+              
+      // personnage
+      
+      // png
+      
+      return etat;
+  }
+  if (etat == 10){ // zone du départ maison en bas à gauche
+      etat = 10; // à finir
+       
+      myPersonnage.stop = true; // permet remise en marche du personnage
+      background(maisonInterieurImg);
+      image(myPersonnage.img, myPersonnage.posX, myPersonnage.posY);
+      cursor(mouseNoCursorImg);
+      noCursor();
+              
+      // personnage
+      
+      // png
       
       return etat;
   }
