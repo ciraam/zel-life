@@ -1223,7 +1223,7 @@ int testColisionEauMagique(){ // pour eau magique
     return 0;
 }
 int testPnjSOS(){ // pour sos fin
-    if (67 > myPersonnage.posX - 30 && 67 < myPersonnage.posX + 30 && 67 +5 > myPersonnage.posY - 25 && 67 < myPersonnage.posY + 40){
+    if (100 > myPersonnage.posX - 30 && 100 < myPersonnage.posX + 30 && 100 +5 > myPersonnage.posY - 25 && 100 < myPersonnage.posY + 40){
       return 2;
     }
     return 0;
