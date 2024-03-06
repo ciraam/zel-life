@@ -591,20 +591,22 @@ void keyPressed(){
              //println("Zone");
              etat = 11;
              jeu = 4;
-             myPersonnage.posX = 100;
-             myPersonnage.posY = 100;
-             myMonstre4.posX = 100;
-             myMonstre4.posY = 200;
-             myMonstre5.posX = 100;
-             myMonstre5.posY = 300;
-             myMonstre6.posX = 100;
-             myMonstre6.posY = 400;
-             myMonstre7.posX = 300;
-             myMonstre7.posY = 250;
-             myMonstre8.posX = 300;
-             myMonstre8.posY = 330;
-             myMonstre9.posX = 300;
-             myMonstre9.posY = 450;
+             if (myMonstre4.life > 0 && myMonstre5.life > 0 && myMonstre6.life > 0 && myMonstre7.life > 0 && myMonstre8.life > 0 && myMonstre9.life > 0){
+               myPersonnage.posX = 90;
+               myPersonnage.posY = 80;
+               myMonstre4.posX = 150;
+               myMonstre4.posY = 200;
+               myMonstre5.posX = 190;
+               myMonstre5.posY = 300;
+               myMonstre6.posX = 100;
+               myMonstre6.posY = 400;
+               myMonstre7.posX = 300;
+               myMonstre7.posY = 250;
+               myMonstre8.posX = 300;
+               myMonstre8.posY = 330;
+               myMonstre9.posX = 300;
+               myMonstre9.posY = 450;
+             }
          }
       }
       if (keyCode == DOWN){
@@ -694,7 +696,7 @@ void keyPressed(){
              jeu = 1;
              myPersonnage.posX = 67;
              myPersonnage.posY = 67;
-             if (myMonstre4.life <= 0 && myMonstre4.life <= 0 && myMonstre4.life <= 0 && myMonstre4.life <= 0 && myMonstre4.life <= 0 && myMonstre4.life <= 0){
+             if (myMonstre4.life <= 0 && myMonstre5.life <= 0 && myMonstre6.life <= 0 && myMonstre7.life <= 0 && myMonstre8.life <= 0 && myMonstre9.life <= 0){
                  myBoss2.posX = 400;
                  myBoss2.posY = 250;
                  etat = 12;
@@ -770,7 +772,7 @@ void keyPressed(){
                myBoss2.life -= myPersonnage.atk;
                myBoss2.img = loadImage("../image/boss2Degat.png");
            }
-           if (testColision3(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 6){ 
+           if (testColision3(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 13){ 
                //println("atck");
                mannequinImg = loadImage("../image/mannequinDegat.png");
            }
@@ -832,7 +834,7 @@ void keyPressed(){
                myBoss2.life -= myPersonnage.atk;
                myBoss2.img = loadImage("../image/boss2Degat.png");
             }
-            if (testColision3(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 6){ 
+            if (testColision3(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 13){ 
                //println("atck");
                mannequinImg = loadImage("../image/mannequinDegat.png");
             }
@@ -894,7 +896,7 @@ void keyPressed(){
                myBoss2.life -= myPersonnage.atk;
                myBoss2.img = loadImage("../image/boss2Degat.png");
             }
-            if (testColision3(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 6){ 
+            if (testColision3(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 13){ 
                //println("atck");
                mannequinImg = loadImage("../image/mannequinDegat.png");
             }
@@ -956,7 +958,7 @@ void keyPressed(){
               myBoss2.life -= myPersonnage.atk;
               myBoss2.img = loadImage("../image/boss2Degat.png");
            }
-           if (testColision3(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 6){ 
+           if (testColision3(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 13){ 
               //println("atck");
               mannequinImg = loadImage("../image/mannequinDegat.png");
            }
@@ -1052,7 +1054,7 @@ int testColision (int xTest, int yTest){ // pour le personnage
         return 6;
      }
    }
-   if (etat == 8){
+   if (etat == 8 || etat == 12){
       if (xTest > 810 - 25 && xTest < 810 + 50 && yTest > 240 - 40 && yTest < 240 + 25){ // colision mannequin
         return 7;
       }
@@ -1129,7 +1131,7 @@ int testColision3 (int xTest, int yTest){ // pour les coups d'épée, range = 15
       return 12;
     }
     if (xTest > 810 - 40 && xTest < 810 + 60 && yTest > 240 - 50 && yTest < 240 + 40){ // hitbox coup d'épée  mannequin
-      return 6;
+      return 13;
     }
     return 0;
 }
@@ -1217,6 +1219,12 @@ int testColisionZone(){ // pour changer de zone
 int testColisionEauMagique(){ // pour eau magique
     if (837.5 > myPersonnage.posX - 55 && 837.5 < myPersonnage.posX + 30 && 85.5 > myPersonnage.posY - 15 && 85.5 < myPersonnage.posY + 50){  // colision eau magique
       return 1;
+    }
+    return 0;
+}
+int testPnjSOS(){ // pour sos fin
+    if (67 > myPersonnage.posX - 30 && 67 < myPersonnage.posX + 30 && 67 +5 > myPersonnage.posY - 25 && 67 < myPersonnage.posY + 40){
+      return 2;
     }
     return 0;
 }
@@ -1347,7 +1355,14 @@ int menuPause(int etat){
         myMonstre.speed = 0; // permet l'arrêt du monstre
         myMonstre2.speed = 0; // permet l'arrêt du monstre2
         myMonstre3.speed = 0; // permet l'arrêt du monstre3
+        myMonstre4.speed = 0; 
+        myMonstre5.speed = 0; 
+        myMonstre6.speed = 0;
+        myMonstre7.speed = 0; 
+        myMonstre8.speed = 0; 
+        myMonstre9.speed = 0;
         myBoss.speed = 0; // permet l'arrêt du boss
+        myBoss2.speed = 0;
         myPersonnage.stop = false; // permet l'arrêt du personnage
         cursor(myMouse.img);
         background(menuPrincipal);
@@ -1559,13 +1574,13 @@ int menuPause(int etat){
   if (etat == 12){ // zone départ attaqué
       etat = 12;
      
-     while (myBoss2.life > 299){
+     if (testPnjSOS() == 2){
         image(loadImage("../image/pnjDialogue.png"), 160, 470);
         textSize(15);
         text("AU SECOURS !!!", 265, 500);
         text("Nous sommes attaqué ...!", 265, 525);
         text("Aidez-nous je vous en prie Aventurier !", 265, 550);
-      }
+     }
       
       myBoss2.speed = 10; 
       myPersonnage.stop = true;
