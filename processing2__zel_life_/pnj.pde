@@ -15,7 +15,7 @@ class Pnj {
   }
   void conversationGuideDepart(){
     image(this.img = loadImage("../image/pnjGuideFace.png"), this.posX, this.posY);
-    if (testColision6(int(this.posX), int(this.posY)) == 0){
+    if (testColision6(int(this.posX), int(this.posY)) == 0 && etat == 8){
       image(loadImage("../image/pnjParler.png"), this.posX + 10, this.posY - 20);
     }
     if (testColision6(int(this.posX), int(this.posY)) == 2){
@@ -30,7 +30,7 @@ class Pnj {
   }
   void conversationGuideDonjon(){
     image(this.img = loadImage("../image/pnjGuideGauche.png"), this.posX, this.posY);
-    if (testColision6(int(this.posX), int(this.posY)) == 0){
+    if (testColision6(int(this.posX), int(this.posY)) == 0 && etat == 2){
       image(loadImage("../image/pnjParler.png"), this.posX + 10, this.posY - 20);
       }
     if (testColision6(int(this.posX), int(this.posY)) == 2){
@@ -43,5 +43,20 @@ class Pnj {
         text("Allez-y donc vous requinquer après un combat contre les monstres !", 265, 550);
       }
     }
-  } 
+  }
+  void conversationHommeApeure(){
+    if (testColision6(int(this.posX), int(this.posY)) == 0 && etat == 8){
+      image(loadImage("../image/pnjParler.png"), this.posX + 10, this.posY - 20);
+      }
+    if (testColision6(int(this.posX), int(this.posY)) == 2){
+      image(loadImage("../image/bouttonF.png"), this.posX + 10, this.posY - 20);
+      if (key == 'f' || key == 'F'){
+        image(loadImage("../image/pnjDialogue.png"), 160, 470);
+        textSize(15);
+        text("Aventurier, j'ai entendu un bruit étrange dans ma cave...", 265, 500);
+        text("Pourriez-vous aller voir vite fait s'il vous plaît ?", 265, 525);
+        text("Je saurai vous remercier !!", 265, 550);
+      }
+    }
+  }
 }

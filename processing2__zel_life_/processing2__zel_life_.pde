@@ -1,5 +1,3 @@
-//ArrayList<Tir> tir = new ArrayList<Tir>();  voir commentaire class Tir
-
 Mouse myMouse;
 Menu myMenuJouer;
 Menu myMenuQuitter;
@@ -15,20 +13,32 @@ Donjon myDonjonPorteOuverte;
 Monstre myMonstre;
 Monstre myMonstre2;
 Monstre myMonstre3;
+Monstre myMonstre4;
+Monstre myMonstre5;
+Monstre myMonstre6;
+Monstre myMonstre7;
+Monstre myMonstre8;
+Monstre myMonstre9;
 Pnj myPnjGuide;
+Pnj myPnjHommeApeure;
 Boss myBoss;
+Boss myBoss2;
 PImage aide;
 PImage persoFaceImg;
 PImage pnjGuideImg;
+PImage pnjHommeApeureImg;
 PImage mapImg;
 PImage donjonImg;
 PImage donjonBossImg;
+PImage donjon2Img;
 PImage donjonPorteOuverteImg;
 PImage effetEauMagique;
 PImage mouseImg;
 PImage mouseNoCursorImg;
 PImage bossDonjonImg;
+PImage boss2Img;
 PImage monstreDonjonImg;
+PImage monstreDonjon2Img;
 PImage menuPrincipal;
 PImage menuTitre;
 PImage menuPrincipalJouer;
@@ -94,19 +104,31 @@ void setup(){
   effetEauMagique = loadImage("../image/effetEauMagique.png");
   
   monstreDonjonImg = loadImage("../image/monstreFace.png");
-  myMonstre = new Monstre("Squelette", 10000000, 10000000, monstreDonjonImg);
-  myMonstre2 = new Monstre("Squelette", 10000000, 10000000, monstreDonjonImg);
-  myMonstre3 = new Monstre("Squelette", 10000000, 10000000, monstreDonjonImg); 
+  monstreDonjon2Img = loadImage("../image/squeletteFortFace.png");
+  myMonstre = new Monstre("Squelette", 50, 3, 10000000, 10000000, monstreDonjonImg);
+  myMonstre2 = new Monstre("Squelette",  50, 3,10000000, 10000000, monstreDonjonImg);
+  myMonstre3 = new Monstre("Squelette",  50, 3,10000000, 10000000, monstreDonjonImg);
+  myMonstre4 = new Monstre("Chef squelette", 100, 6, 10000000, 10000000, monstreDonjon2Img);
+  myMonstre5 = new Monstre("Chef squelette",  100, 6, 10000000, 10000000, monstreDonjon2Img);
+  myMonstre6 = new Monstre("Chef squelette",  100, 6, 10000000, 10000000, monstreDonjon2Img); 
+  myMonstre7 = new Monstre("Chef squelette",  100, 6, 10000000, 10000000, monstreDonjon2Img);
+  myMonstre8 = new Monstre("Chef squelette",  100, 6, 10000000, 10000000, monstreDonjon2Img);
+  myMonstre9 = new Monstre("Chef squelette",  100, 6, 10000000, 10000000, monstreDonjon2Img); 
   
   bossDonjonImg = loadImage("../image/boss.png");
-  myBoss = new Boss("Roi squelete", 10000000, 10000000, bossDonjonImg);
+  boss2Img = loadImage("../image/boss.png");
+  myBoss = new Boss("Roi squelete", 150, 6, 10000000, 10000000, bossDonjonImg);
+  myBoss2 = new Boss("Roi des monstres", 300, 12, 10000000, 10000000, boss2Img);
   
   pnjGuideImg = loadImage("../image/pnjGuideFace.png");
+  pnjHommeApeureImg = loadImage("../image/hommeApeure.png");
   myPnjGuide = new Pnj("Guide", pnjGuideImg);
+  myPnjHommeApeure = new Pnj("Homme apeuré", pnjHommeApeureImg);
   
   zoneDepartImg = loadImage("../image/MAP.png");
   mannequinImg = loadImage("../image/mannequin.png");
   maisonInterieurImg = loadImage("../image/maison.png");
+  donjon2Img = loadImage("../image/donjon2.png");
   
   aide = loadImage("../image/effetEauMagique.png");
 }
@@ -124,7 +146,7 @@ void draw(){
     if (testColisionMenu() == 3){
           image(reprendreSurvolImg, myMenuJouer.posX, myMenuJouer.posY);
           if (testColisionMenu() == 3 && mousePressed == true){
-            menuJeu(jeu = 4);
+            menuJeu(jeu = 1);
             etat = 8;
             myPersonnage.posX = 600;
             myPersonnage.posY = 550;
@@ -156,6 +178,9 @@ void draw(){
        if (testColision4(int(myMenuReprendre.posX), int(myMenuReprendre.posY)) == 2){
             image(reprendreSurvolImg, myMenuReprendre.posX, myMenuReprendre.posY);
             //println("Reprendre");
+            if (testColision4(int(myMenuReprendre.posX), int(myMenuReprendre.posY)) == 2 && mousePressed == true && jeu == 1){
+                  etat = 8;
+             }
             if (testColision4(int(myMenuReprendre.posX), int(myMenuReprendre.posY)) == 2 && mousePressed == true && jeu == 2){
                   etat = 2;
              }
@@ -163,13 +188,16 @@ void draw(){
                   etat = 6;
              }
              if (testColision4(int(myMenuReprendre.posX), int(myMenuReprendre.posY)) == 2 && mousePressed == true && jeu == 4){
-                  etat = 8;
+                  etat = 11;
              }
              if (testColision4(int(myMenuReprendre.posX), int(myMenuReprendre.posY)) == 2 && mousePressed == true && jeu == 5){
                   etat = 9;
              }
              if (testColision4(int(myMenuReprendre.posX), int(myMenuReprendre.posY)) == 2 && mousePressed == true && jeu == 6){
                   etat = 10;
+             }
+             if (testColision4(int(myMenuReprendre.posX), int(myMenuReprendre.posY)) == 2 && mousePressed == true && jeu == 7){
+                  etat = 12;
              }
         }
         if (testColision4(int(myMenuReprendreMenu.posX), int(myMenuReprendreMenu.posY)) == 2){
@@ -211,7 +239,7 @@ void draw(){
   }
   if (gameStatus == true && etat == 8) {
        menuPause(etat);
-       menuJeu(jeu = 4);
+       menuJeu(jeu = 1);
        timerMin = minute();  
        timerSeconde = second();
   }
@@ -226,6 +254,21 @@ void draw(){
        menuJeu(jeu = 6);
        timerMin = minute();  
        timerSeconde = second();
+  }
+  if (gameStatus == true && etat == 11) {
+       menuPause(etat);
+       menuJeu(jeu = 4);
+       timerMin = minute();  
+       timerSeconde = second();
+  }
+  if (gameStatus == true && etat == 12) {
+       menuPause(etat);
+       menuJeu(jeu = 7);
+       timerMin = minute();  
+       timerSeconde = second();
+       if (myBoss2.life <= 0){
+         etat = 7; 
+       }
   }
   if (gameStatus == false) {  // à voir pour rajouter une confirmation oui/non
        menuPause(etat = 1);
@@ -259,26 +302,63 @@ void keyPressed(){
            lifePersonnage = lifePersonnage - myBoss.atk;
            myPersonnage.img = loadImage("../image/persoDegat.png");
         }
-        if (testColision(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 6){ 
-          
+        if (etat == 11){
+          if (testColision(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 7){ 
+            lifePersonnage = lifePersonnage - myMonstre4.atk;
+            myPersonnage.img = loadImage("../image/persoDegat.png");
+          }
+          if (testColision(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 8){ 
+            lifePersonnage = lifePersonnage - myMonstre5.atk;
+            myPersonnage.img = loadImage("../image/persoDegat.png");
+          }
+          if (testColision(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 9){ 
+            lifePersonnage = lifePersonnage - myMonstre6.atk;
+            myPersonnage.img = loadImage("../image/persoDegat.png");
+          }
+          if (testColision(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 10){ 
+            lifePersonnage = lifePersonnage - myMonstre7.atk;
+            myPersonnage.img = loadImage("../image/persoDegat.png");
+          }
+          if (testColision(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 11){ 
+            lifePersonnage = lifePersonnage - myMonstre8.atk;
+            myPersonnage.img = loadImage("../image/persoDegat.png");
+          }
+          if (testColision(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 12){ 
+            lifePersonnage = lifePersonnage - myMonstre9.atk;
+            myPersonnage.img = loadImage("../image/persoDegat.png");
+          }
         }
-        if (testColision(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 7){ 
-          
+        if (etat == 12){
+          if (testColision(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 6){ 
+            lifePersonnage = lifePersonnage - myBoss2.atk;
+            myPersonnage.img = loadImage("../image/persoDegat.png");
+          }
         }
-        if (testColision(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 8){ 
-          
-        }
-        if (testColision(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 9){ 
-          
-        }
-        if (testColision(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 10){ 
-          
-        }
-        if (testColision(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 11){ 
-          
-        }
-        if (testColision(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 12){ 
-          
+        if (etat == 8){
+          if (testColision(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 6){ 
+            
+          }
+          if (testColision(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 7){ 
+            
+          }
+          if (testColision(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 8){ 
+            
+          }
+          if (testColision(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 9){ 
+            
+          }
+          if (testColision(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 10){ 
+            
+          }
+          if (testColision(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 11){ 
+            
+          }
+          if (testColision(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 12){ 
+            
+          }
+          if (testColision(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 13){ 
+            
+          }
         }
         if (testColisionZone() == 1 && etat == 2){
              //println("Zone");
@@ -287,9 +367,16 @@ void keyPressed(){
              myPersonnage.posX = 925;
              myPersonnage.posY = 400;
              if (myBoss.life > 0 ){
-               myBoss.posX = 120;
-               myBoss.posY = 120;
+               myBoss.posX = 100;
+               myBoss.posY = 150;
              }
+         }
+         if (testColisionZone() == 10 && etat == 11){
+             //println("Zone");
+             etat = 9;
+             jeu = 5;
+             myPersonnage.posX = 595;
+             myPersonnage.posY = 115;
          }
       }
       if (keyCode == RIGHT){
@@ -317,26 +404,61 @@ void keyPressed(){
            lifePersonnage = lifePersonnage - myBoss.atk;
            myPersonnage.img = loadImage("../image/persoDegat.png");
         }
-        if (testColision(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 6){ 
-         
+        if (etat == 8){
+          if (testColision(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 6){ 
+           
+          }
+          if (testColision(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 7){ 
+           
+          }
+          if (testColision(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 8){ 
+           
+          }
+          if (testColision(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 9){ 
+           
+          }
+          if (testColision(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 10){ 
+           
+          }
+          if (testColision(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 11){ 
+           
+          }
+          if (testColision(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 12){ 
+           
+          }
         }
-        if (testColision(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 7){ 
-         
+        if (etat == 11){
+          if (testColision(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 7){ 
+             lifePersonnage = lifePersonnage - myMonstre4.atk;
+             myPersonnage.img = loadImage("../image/persoDegat.png");
+          }
+          if (testColision(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 8){ 
+             lifePersonnage = lifePersonnage - myMonstre5.atk;
+             myPersonnage.img = loadImage("../image/persoDegat.png");
+          }
+          if (testColision(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 9){ 
+             lifePersonnage = lifePersonnage - myMonstre6.atk;
+             myPersonnage.img = loadImage("../image/persoDegat.png");
+          }
+          if (testColision(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 10){ 
+             lifePersonnage = lifePersonnage - myMonstre7.atk;
+             myPersonnage.img = loadImage("../image/persoDegat.png");
+          }
+          if (testColision(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 11){ 
+             lifePersonnage = lifePersonnage - myMonstre8.atk;
+             myPersonnage.img = loadImage("../image/persoDegat.png");
+          }
+          if (testColision(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 12){ 
+             lifePersonnage = lifePersonnage - myMonstre9.atk;
+             myPersonnage.img = loadImage("../image/persoDegat.png");
+          }
         }
-        if (testColision(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 8){ 
-         
-        }
-        if (testColision(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 9){ 
-         
-        }
-        if (testColision(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 10){ 
-         
-        }
-        if (testColision(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 11){ 
-         
-        }
-        if (testColision(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 12){ 
-         
+        if (etat == 12){
+          if (testColision(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 6){ 
+           //println("dégât");
+           lifePersonnage = lifePersonnage - myBoss2.atk;
+           myPersonnage.img = loadImage("../image/persoDegat.png");
+          }
         }
         if (testColisionZone() == 2  && etat == 6){
              //println("Zone");
@@ -371,26 +493,61 @@ void keyPressed(){
            lifePersonnage = lifePersonnage - myBoss.atk;
            myPersonnage.img = loadImage("../image/persoDegat.png");
         }
-        if (testColision(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 6){ 
-
+        if (etat == 8){
+          if (testColision(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 6){ 
+  
+          }
+          if (testColision(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 7){ 
+  
+          }
+          if (testColision(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 8){ 
+  
+          }
+          if (testColision(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 9){ 
+  
+          }
+          if (testColision(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 10){ 
+  
+          }
+          if (testColision(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 11){ 
+  
+          }
+          if (testColision(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 12){ 
+  
+          }
         }
-        if (testColision(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 7){ 
-
+        if (etat == 11){
+          if (testColision(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 7){ 
+              lifePersonnage = lifePersonnage - myMonstre4.atk;
+               myPersonnage.img = loadImage("../image/persoDegat.png");
+          }
+          if (testColision(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 8){ 
+              lifePersonnage = lifePersonnage - myMonstre5.atk;
+               myPersonnage.img = loadImage("../image/persoDegat.png");
+          }
+          if (testColision(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 9){ 
+              lifePersonnage = lifePersonnage - myMonstre6.atk;
+               myPersonnage.img = loadImage("../image/persoDegat.png");
+          }
+          if (testColision(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 10){ 
+              lifePersonnage = lifePersonnage - myMonstre7.atk;
+             myPersonnage.img = loadImage("../image/persoDegat.png");
+          }
+          if (testColision(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 11){ 
+              lifePersonnage = lifePersonnage - myMonstre8.atk;
+             myPersonnage.img = loadImage("../image/persoDegat.png");
+          }
+          if (testColision(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 12){ 
+              lifePersonnage = lifePersonnage - myMonstre9.atk;
+             myPersonnage.img = loadImage("../image/persoDegat.png");
+          }
         }
-        if (testColision(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 8){ 
-
-        }
-        if (testColision(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 9){ 
-
-        }
-        if (testColision(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 10){ 
-
-        }
-        if (testColision(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 11){ 
-
-        }
-        if (testColision(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 12){ 
-
+        if (etat == 12){
+          if (testColision(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 6){ 
+           //println("dégât");
+           lifePersonnage = lifePersonnage - myBoss2.atk;
+           myPersonnage.img = loadImage("../image/persoDegat.png");
+          }
         }
         if (testColisionZone() == 3  && etat == 8){
              //println("Zone");
@@ -408,27 +565,46 @@ void keyPressed(){
                 myMonstre3.posY = 400;
             }
          }
-         if (testColisionZone() == 4  && etat == 2){
+         if (testColisionZone() == 4 && etat == 2){
              //println("Zone");
              etat = 8;
-             jeu = 4;
+             jeu = 1;
              myPersonnage.posX = 482;
              myPersonnage.posY = 80;
              myPersonnage.img = loadImage("../image/persoFace.png");
          }
-         if (testColisionZone() == 5  && etat == 8){
+         if (testColisionZone() == 5 && etat == 8){
              //println("Zone");
              etat = 9;
              jeu = 5;
              myPersonnage.posX = 497;
              myPersonnage.posY = 350;
          }
-         if (testColisionZone() == 7  && etat == 8){
+         if (testColisionZone() == 7 && etat == 8){
              //println("Zone");
              etat = 10;
              jeu = 6;
              myPersonnage.posX = 497;
              myPersonnage.posY = 350;
+         }
+         if (testColisionZone() == 9 && etat == 9){
+             //println("Zone");
+             etat = 11;
+             jeu = 4;
+             myPersonnage.posX = 100;
+             myPersonnage.posY = 100;
+             myMonstre4.posX = 100;
+             myMonstre4.posY = 200;
+             myMonstre5.posX = 100;
+             myMonstre5.posY = 300;
+             myMonstre6.posX = 100;
+             myMonstre6.posY = 400;
+             myMonstre7.posX = 300;
+             myMonstre7.posY = 250;
+             myMonstre8.posX = 300;
+             myMonstre8.posY = 330;
+             myMonstre9.posX = 300;
+             myMonstre9.posY = 450;
          }
       }
       if (keyCode == DOWN){
@@ -456,38 +632,79 @@ void keyPressed(){
            lifePersonnage = lifePersonnage - myBoss.atk;
            myPersonnage.img = loadImage("../image/persoDegat.png");
         }
-        if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 6){ 
-
+        if (etat == 11){
+          if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 7){ 
+              lifePersonnage = lifePersonnage - myMonstre4.atk;
+              myPersonnage.img = loadImage("../image/persoDegat.png");
+          }
+          if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 8){ 
+              lifePersonnage = lifePersonnage - myMonstre5.atk;
+              myPersonnage.img = loadImage("../image/persoDegat.png");
+          }
+          if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 9){ 
+              lifePersonnage = lifePersonnage - myMonstre6.atk;
+              myPersonnage.img = loadImage("../image/persoDegat.png");
+          }
+          if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 10){ 
+              lifePersonnage = lifePersonnage - myMonstre7.atk;
+              myPersonnage.img = loadImage("../image/persoDegat.png");
+          }
+          if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 11){ 
+              lifePersonnage = lifePersonnage - myMonstre8.atk;
+              myPersonnage.img = loadImage("../image/persoDegat.png");
+          }
+          if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 12){ 
+              lifePersonnage = lifePersonnage - myMonstre9.atk;
+              myPersonnage.img = loadImage("../image/persoDegat.png");
+          }    
         }
-        if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 7){ 
-
+        if (etat == 8){
+          if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 6){ 
+  
+          }
+          if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 7){ 
+  
+          }
+          if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 8){ 
+  
+          }
+          if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 9){ 
+  
+          }
+          if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 10){ 
+  
+          }
+          if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 11){ 
+  
+          }
+          if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 12){ 
+  
+          }
         }
-        if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 8){ 
-
-        }
-        if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 9){ 
-
-        }
-        if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 10){ 
-
-        }
-        if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 11){ 
-
-        }
-        if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 12){ 
-
+        if (etat == 12){
+          if (testColision(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 6){ 
+           //println("dégât");
+           lifePersonnage = lifePersonnage - myBoss2.atk;
+           myPersonnage.img = loadImage("../image/persoDegat.png");
+          }
         }
         if (testColisionZone() == 6 && etat == 9){
              //println("Zone");
              etat = 8;
-             jeu = 4;
+             jeu = 1;
              myPersonnage.posX = 67;
              myPersonnage.posY = 67;
+             if (myMonstre4.life <= 0 && myMonstre4.life <= 0 && myMonstre4.life <= 0 && myMonstre4.life <= 0 && myMonstre4.life <= 0 && myMonstre4.life <= 0){
+                 myBoss2.posX = 400;
+                 myBoss2.posY = 250;
+                 etat = 12;
+                 jeu = 7;
+             }
          }
          if (testColisionZone() == 6 && etat == 10){
              //println("Zone");
              etat = 8;
-             jeu = 4;
+             jeu = 1;
              myPersonnage.posX = 87;
              myPersonnage.posY = 390;
          }
@@ -518,6 +735,41 @@ void keyPressed(){
                myBoss.life -= myPersonnage.atk;
                myBoss.img = loadImage("../image/bossDegat.png");
            }
+           if (testColision3(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 7){ 
+               //println("atck");
+               myMonstre4.life -= myPersonnage.atk;
+               myMonstre4.img = loadImage("../image/monstreDegat.png");
+           }
+           if (testColision3(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 8){ 
+               //println("atck");
+               myMonstre5.life -= myPersonnage.atk;
+               myMonstre5.img = loadImage("../image/monstreDegat.png");
+           }
+           if (testColision3(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 9){ 
+               //println("atck");
+               myMonstre6.life -= myPersonnage.atk;
+               myMonstre6.img = loadImage("../image/monstreDegat.png");
+           }
+           if (testColision3(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 10){ 
+               //println("atck");
+               myMonstre7.life -= myPersonnage.atk;
+               myMonstre7.img = loadImage("../image/monstreDegat.png");
+           }
+           if (testColision3(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 11){ 
+               //println("atck");
+               myMonstre8.life -= myPersonnage.atk;
+               myMonstre8.img = loadImage("../image/monstreDegat.png");
+           }
+           if (testColision3(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 12){ 
+               //println("atck");
+               myMonstre9.life -= myPersonnage.atk;
+               myMonstre9.img = loadImage("../image/monstreDegat.png");
+           }
+           if (testColision3(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 6){ 
+               //println("atck");
+               myBoss2.life -= myPersonnage.atk;
+               myBoss2.img = loadImage("../image/boss2Degat.png");
+           }
            if (testColision3(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 6){ 
                //println("atck");
                mannequinImg = loadImage("../image/mannequinDegat.png");
@@ -544,6 +796,41 @@ void keyPressed(){
                //println("atck");
                myBoss.life -= myPersonnage.atk;
                myBoss.img = loadImage("../image/bossDegat.png");
+            }
+            if (testColision3(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 7){ 
+               //println("atck");
+               myMonstre4.life -= myPersonnage.atk;
+               myMonstre4.img = loadImage("../image/monstreDegat.png");
+            }
+            if (testColision3(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 8){ 
+               //println("atck");
+               myMonstre5.life -= myPersonnage.atk;
+               myMonstre5.img = loadImage("../image/monstreDegat.png");
+            }
+            if (testColision3(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 9){ 
+               //println("atck");
+               myMonstre6.life -= myPersonnage.atk;
+               myMonstre6.img = loadImage("../image/monstreDegat.png");
+            }
+            if (testColision3(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 10){ 
+               //println("atck");
+               myMonstre7.life -= myPersonnage.atk;
+               myMonstre7.img = loadImage("../image/monstreDegat.png");
+            }
+            if (testColision3(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 11){ 
+               //println("atck");
+               myMonstre8.life -= myPersonnage.atk;
+               myMonstre8.img = loadImage("../image/monstreDegat.png");
+            }
+            if (testColision3(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 12){ 
+               //println("atck");
+               myMonstre9.life -= myPersonnage.atk;
+               myMonstre9.img = loadImage("../image/monstreDegat.png");
+            }
+            if (testColision3(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 6){ 
+               //println("atck");
+               myBoss2.life -= myPersonnage.atk;
+               myBoss2.img = loadImage("../image/boss2Degat.png");
             }
             if (testColision3(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 6){ 
                //println("atck");
@@ -572,6 +859,41 @@ void keyPressed(){
                myBoss.life -= myPersonnage.atk;
                myBoss.img = loadImage("../image/bossDegat.png");
             }
+            if (testColision3(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 7){ 
+               //println("atck");
+               myMonstre4.life -= myPersonnage.atk;
+               myMonstre4.img = loadImage("../image/monstreDegat.png");
+            }
+            if (testColision3(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 8){ 
+               //println("atck");
+               myMonstre5.life -= myPersonnage.atk;
+               myMonstre5.img = loadImage("../image/monstreDegat.png");
+            }
+            if (testColision3(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 9){ 
+               //println("atck");
+               myMonstre6.life -= myPersonnage.atk;
+               myMonstre6.img = loadImage("../image/monstreDegat.png");
+            }
+            if (testColision3(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 10){ 
+               //println("atck");
+               myMonstre7.life -= myPersonnage.atk;
+               myMonstre7.img = loadImage("../image/monstreDegat.png");
+            }
+            if (testColision3(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 11){ 
+               //println("atck");
+               myMonstre8.life -= myPersonnage.atk;
+               myMonstre8.img = loadImage("../image/monstreDegat.png");
+            }
+            if (testColision3(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 12){ 
+               //println("atck");
+               myMonstre9.life -= myPersonnage.atk;
+               myMonstre9.img = loadImage("../image/monstreDegat.png");
+            }
+            if (testColision3(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 6){ 
+               //println("atck");
+               myBoss2.life -= myPersonnage.atk;
+               myBoss2.img = loadImage("../image/boss2Degat.png");
+            }
             if (testColision3(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 6){ 
                //println("atck");
                mannequinImg = loadImage("../image/mannequinDegat.png");
@@ -599,6 +921,41 @@ void keyPressed(){
               myBoss.life -= myPersonnage.atk;
               myBoss.img = loadImage("../image/bossDegat.png");
            }
+           if (testColision3(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 7){ 
+              //println("atck");
+              myMonstre4.life -= myPersonnage.atk;
+              myMonstre4.img = loadImage("../image/monstreDegat.png");
+           }
+           if (testColision3(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 8){ 
+              //println("atck");
+              myMonstre5.life -= myPersonnage.atk;
+              myMonstre5.img = loadImage("../image/monstreDegat.png");
+           }
+           if (testColision3(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 9){ 
+              //println("atck");
+              myMonstre6.life -= myPersonnage.atk;
+              myMonstre6.img = loadImage("../image/monstreDegat.png");
+           }
+           if (testColision3(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 10){ 
+              //println("atck");
+              myMonstre7.life -= myPersonnage.atk;
+              myMonstre7.img = loadImage("../image/monstreDegat.png");
+           }
+           if (testColision3(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 11){ 
+              //println("atck");
+              myMonstre8.life -= myPersonnage.atk;
+              myMonstre8.img = loadImage("../image/monstreDegat.png");
+           }
+           if (testColision3(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 12){ 
+              //println("atck");
+              myMonstre9.life -= myPersonnage.atk;
+              myMonstre9.img = loadImage("../image/monstreDegat.png");
+           }
+           if (testColision3(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 6){ 
+              //println("atck");
+              myBoss2.life -= myPersonnage.atk;
+              myBoss2.img = loadImage("../image/boss2Degat.png");
+           }
            if (testColision3(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 6){ 
               //println("atck");
               mannequinImg = loadImage("../image/mannequinDegat.png");
@@ -614,6 +971,13 @@ void keyPressed(){
 
 // fonction colision
 int testColision (int xTest, int yTest){ // pour le personnage
+    
+    if (xTest < 0 || xTest > width-30){
+      return 1;
+    }
+    if (yTest < 0 || yTest > height-50){
+      return 1;
+    }
     if (etat == 9 || etat == 10){
         if (xTest < 0 || xTest > width-370){
           return 1;
@@ -621,30 +985,24 @@ int testColision (int xTest, int yTest){ // pour le personnage
         if (yTest < 0 || yTest > height-215){
           return 1;
         }
-        if (xTest < 0 || xTest > width+200){
+        if (xTest > 50 - 60 && xTest < 50 + 330 && yTest > 0 - 30 && yTest < 0 + 600){
           return 1;
         }
-        if (yTest < 0 || yTest > height+150){
+        if (xTest > 495 - 300 && xTest < 495 + 300 && yTest > 0 - 30 && yTest < 0 + 80){
           return 1;
         }
     }
-    if (xTest < 0 || xTest > width-30){
-      return 1;
-    }
-    if (yTest < 0 || yTest > height-50){
-      return 1;
-    }
-    if(myMonstre.life > 0 && etat ==2){
+    if(myMonstre.life > 0 && etat == 2){
       if (xTest > myMonstre.posX - 25 && xTest < myMonstre.posX + 25 && yTest > myMonstre.posY - 45 && yTest < myMonstre.posY + 20){ // colision monstre
         return 2;
       }
     }
-    if(myMonstre2.life > 0 && etat ==2){
+    if(myMonstre2.life > 0 && etat == 2){
       if (xTest > myMonstre2.posX - 25 && xTest < myMonstre2.posX + 25 && yTest > myMonstre2.posY - 45 && yTest < myMonstre2.posY + 20){ // colision monstre2
         return 3;
       }
     }
-    if(myMonstre3.life > 0 && etat ==2){
+    if(myMonstre3.life > 0 && etat == 2){
       if (xTest > myMonstre3.posX - 25 && xTest < myMonstre3.posX + 25 && yTest > myMonstre3.posY - 45 && yTest < myMonstre3.posY + 20){ // colision monstre3
         return 4;
       }
@@ -654,10 +1012,47 @@ int testColision (int xTest, int yTest){ // pour le personnage
         return 5;
       }
     }
-   if (xTest > myPnjGuide.posX - 20 && xTest < myPnjGuide.posX + 20 && yTest > myPnjGuide.posY - 40 && yTest < myPnjGuide.posY + 20){ // colision pnj
-      return 6;
+    if (myBoss2.life > 0 && etat == 12){
+      if (xTest > myBoss2.posX - 14 && xTest < myBoss2.posX + 109 && yTest > myBoss2.posY - 33 && yTest < myBoss2.posY + 63){ // colision boss2
+        return 6;
+      }
     }
-    if (etat == 8){
+    if(myMonstre4.life > 0 && etat == 11){
+      if (xTest > myMonstre4.posX - 25 && xTest < myMonstre4.posX + 25 && yTest > myMonstre4.posY - 45 && yTest < myMonstre4.posY + 20){ // colision myMonstre4
+        return 7;
+      }
+    }
+    if(myMonstre5.life > 0 && etat == 11){
+      if (xTest > myMonstre5.posX - 25 && xTest < myMonstre5.posX + 25 && yTest > myMonstre5.posY - 45 && yTest < myMonstre5.posY + 20){ // colision myMonstre5
+        return 8;
+      }
+    }
+    if(myMonstre6.life > 0 && etat == 11){
+      if (xTest > myMonstre6.posX - 25 && xTest < myMonstre6.posX + 25 && yTest > myMonstre6.posY - 45 && yTest < myMonstre6.posY + 20){ // colision myMonstre6
+        return 9;
+      }
+    }
+    if(myMonstre7.life > 0 && etat == 11){
+      if (xTest > myMonstre7.posX - 25 && xTest < myMonstre7.posX + 25 && yTest > myMonstre7.posY - 45 && yTest < myMonstre7.posY + 20){ // colision myMonstre7
+        return 10;
+      }
+    }
+    if(myMonstre8.life > 0 && etat == 11){
+      if (xTest > myMonstre8.posX - 25 && xTest < myMonstre8.posX + 25 && yTest > myMonstre8.posY - 45 && yTest < myMonstre8.posY + 20){ // colision myMonstre8
+        return 11;
+      }
+    }
+    if(myMonstre9.life > 0 && etat == 11){
+      if (xTest > myMonstre9.posX - 25 && xTest < myMonstre9.posX + 25 && yTest > myMonstre9.posY - 45 && yTest < myMonstre9.posY + 20){ // colision myMonstre9
+        return 12;
+      }
+    }
+   if (etat == 2 || etat == 8){
+     if (xTest > myPnjGuide.posX - 20 && xTest < myPnjGuide.posX + 20 && yTest > myPnjGuide.posY - 40 && yTest < myPnjGuide.posY + 20){ // colision pnj guide
+        return 6;
+     }
+   }
+   if (etat == 8){
       if (xTest > 810 - 25 && xTest < 810 + 50 && yTest > 240 - 40 && yTest < 240 + 25){ // colision mannequin
         return 7;
       }
@@ -675,6 +1070,9 @@ int testColision (int xTest, int yTest){ // pour le personnage
       }
       if (xTest > 950 - 65 && xTest < 950 + 45 && yTest > 60 - 80 && yTest < 60 + 30){ // colision maison en haut à droite zone départ
         return 12;
+      }
+      if (xTest > myPnjHommeApeure.posX - 20 && xTest < myPnjHommeApeure.posX + 20 && yTest > myPnjHommeApeure.posY - 40 && yTest < myPnjHommeApeure.posY + 20){ // colision pnj homme apeuré
+        return 13;
       }
     }
     if (myMonstre.life > 0 && myMonstre2.life > 0 && myMonstre3.life > 0 && etat == 2) {
@@ -708,6 +1106,27 @@ int testColision3 (int xTest, int yTest){ // pour les coups d'épée, range = 15
     }
     if (xTest > myBoss.posX - 29 && xTest < myBoss.posX + 121 && yTest > myBoss.posY - 48 && yTest < myBoss.posY + 78){ // hitbox coup d'épée  boss
       return 5;
+    }
+    if (xTest > myBoss2.posX - 29 && xTest < myBoss2.posX + 121 && yTest > myBoss2.posY - 48 && yTest < myBoss2.posY + 78){ // hitbox coup d'épée  boss2
+      return 6;
+    }
+    if (xTest > myMonstre4.posX - 40 && xTest < myMonstre4.posX + 40 && yTest > myMonstre4.posY - 60 && yTest < myMonstre4.posY + 35){ // hitbox coup d'épée myMonstre4
+      return 7;
+    }
+    if (xTest > myMonstre5.posX - 40 && xTest < myMonstre5.posX + 40 && yTest > myMonstre5.posY - 60 && yTest < myMonstre5.posY + 35){ // hitbox coup d'épée myMonstre5
+      return 8;
+    }
+    if (xTest > myMonstre6.posX - 40 && xTest < myMonstre6.posX + 40 && yTest > myMonstre6.posY - 60 && yTest < myMonstre6.posY + 35){ // hitbox coup d'épée myMonstre6
+      return 9;
+    }
+    if (xTest > myMonstre7.posX - 40 && xTest < myMonstre7.posX + 40 && yTest > myMonstre7.posY - 60 && yTest < myMonstre7.posY + 35){ // hitbox coup d'épée monstre7
+      return 10;
+    }
+    if (xTest > myMonstre8.posX - 40 && xTest < myMonstre8.posX + 40 && yTest > myMonstre8.posY - 60 && yTest < myMonstre8.posY + 35){ // hitbox coup d'épée myMonstre8
+      return 11;
+    }
+    if (xTest > myMonstre9.posX - 40 && xTest < myMonstre9.posX + 40 && yTest > myMonstre9.posY - 60 && yTest < myMonstre9.posY + 35){ // hitbox coup d'épée myMonstre9
+      return 12;
     }
     if (xTest > 810 - 40 && xTest < 810 + 60 && yTest > 240 - 50 && yTest < 240 + 40){ // hitbox coup d'épée  mannequin
       return 6;
@@ -763,29 +1182,35 @@ int testColisionWinMortMenu(){ // pour mort et win
     return 0;
 }
 int testColisionZone(){ // pour changer de zone
-    if (0 > myPersonnage.posX - 45 && 0 < myPersonnage.posX + 45 && 415 > myPersonnage.posY - 45 && 415 < myPersonnage.posY + 45){  // colision porte donjon boss aller
+    if (0 > myPersonnage.posX - 45 && 0 < myPersonnage.posX + 45 && 415 > myPersonnage.posY - 45 && 415 < myPersonnage.posY + 45){  // colision entrée porte donjon boss
       return 1;
     }
-    if (990 > myPersonnage.posX - 45 && 990 < myPersonnage.posX + 45 && 400 > myPersonnage.posY - 45 && 400 < myPersonnage.posY + 45){  // colision porte donjon boss retour
+    if (990 > myPersonnage.posX - 45 && 990 < myPersonnage.posX + 45 && 400 > myPersonnage.posY - 45 && 400 < myPersonnage.posY + 45){  // colision sortie porte donjon boss 
       return 2;
     }
-    if (495 > myPersonnage.posX - 30 && 495 < myPersonnage.posX + 30 && 0 +10 > myPersonnage.posY - 25 && 0 < myPersonnage.posY + 30){  // colision entrée donjon aller
+    if (495 > myPersonnage.posX - 30 && 495 < myPersonnage.posX + 30 && 0 +10 > myPersonnage.posY - 25 && 0 < myPersonnage.posY + 30){  // colision entrée donjon 
       return 3;
     }
-    if (622 > myPersonnage.posX - 30 && 622 < myPersonnage.posX + 30 && 0+10 > myPersonnage.posY - 25 && 0 < myPersonnage.posY + 30){  // colision entrée donjon retour
+    if (622 > myPersonnage.posX - 30 && 622 < myPersonnage.posX + 30 && 0+10 > myPersonnage.posY - 25 && 0 < myPersonnage.posY + 30){  // colision sortie donjon 
       return 4;
     }
-    if (60 > myPersonnage.posX - 20 && 60 < myPersonnage.posX + 20 && 0 -15 > myPersonnage.posY - 25 && 0 < myPersonnage.posY + 30){  // colision entrée maison en haut à gauche aller
+    if (60 > myPersonnage.posX - 20 && 60 < myPersonnage.posX + 20 && 0 + 27 > myPersonnage.posY - 25 && 0 < myPersonnage.posY + 30){  // colision entrée maison en haut à gauche 
       return 5;
     }
-    if (495 > myPersonnage.posX - 20 && 495 < myPersonnage.posX + 20 && 400 +5 > myPersonnage.posY - 25 && 400 < myPersonnage.posY + 30){  // colision entrée maison en haut à gauche retour
+    if (497 > myPersonnage.posX - 30 && 497 < myPersonnage.posX + 30 && 400 +5 > myPersonnage.posY - 25 && 400 < myPersonnage.posY + 40){  // colision sortie maison en haut à gauche 
       return 6;
     }
-    if (80 > myPersonnage.posX - 20 && 80 < myPersonnage.posX + 20 && 360 -10 > myPersonnage.posY - 25 && 360 < myPersonnage.posY + 30){  // colision entrée maison en bas à gauche aller
+    if (80 > myPersonnage.posX - 20 && 80 < myPersonnage.posX + 20 && 360 -8 > myPersonnage.posY - 25 && 360 < myPersonnage.posY + 30){  // colision entrée maison en bas à gauche 
       return 7;
     }
-    if (490 > myPersonnage.posX - 20 && 490 < myPersonnage.posX + 20 && 400 +5 > myPersonnage.posY - 25 && 400 < myPersonnage.posY + 30){  // colision entrée maison en bas à gauche retour
+    if (490 > myPersonnage.posX - 20 && 490 < myPersonnage.posX + 20 && 400 +5 > myPersonnage.posY - 25 && 400 < myPersonnage.posY + 30){  // colision sortie maison en bas à gauche 
       return 8;
+    }
+    if (595 > myPersonnage.posX - 30 && 595 < myPersonnage.posX + 20 && 100 > myPersonnage.posY - 25 && 100 < myPersonnage.posY + 30){  // colision entrée donjon2
+      return 9;
+    }
+    if (0 > myPersonnage.posX - 45 && 0 < myPersonnage.posX + 45 && 200 > myPersonnage.posY - 45 && 200 < myPersonnage.posY + 45){  // colision sortie donjon2
+      return 10;
     }
     return 0;
 }
@@ -816,11 +1241,11 @@ int menuJeu(int jeu){
       jeu = 2;
       return jeu;
   } 
-  if (jeu == 3){ // donjon boss
+  if (jeu == 3){ // boss
       jeu = 3; 
       return jeu;
   }
-  if (jeu == 4){ // zone départ
+  if (jeu == 4){ // donjon2
       jeu = 4; 
       return jeu;
   }
@@ -828,8 +1253,12 @@ int menuJeu(int jeu){
       jeu = 5; 
       return jeu;
   }
-  if (jeu == 6){ // zone départ maison en bas à droite
+  if (jeu == 6){ // zone départ maison en bas à gauche
       jeu = 6; 
+      return jeu;
+  }
+  if (jeu == 7){ // boss2
+      jeu = 7; 
       return jeu;
   }
   return jeu;
@@ -888,7 +1317,14 @@ int menuPause(int etat){
         myMonstre.speed = 0; // permet l'arrêt du monstre
         myMonstre2.speed = 0; // permet l'arrêt du monstre2
         myMonstre3.speed = 0; // permet l'arrêt du monstre3
+        myMonstre4.speed = 0; 
+        myMonstre5.speed = 0; 
+        myMonstre6.speed = 0;
+        myMonstre7.speed = 0; 
+        myMonstre8.speed = 0; 
+        myMonstre9.speed = 0;
         myBoss.speed = 0; // permet l'arrêt du boss
+        myBoss2.speed = 0;
         myPersonnage.stop = false; // permet l'arrêt du personnage
         cursor(myMouse.img);
      //   tint(200, 70); bug² ?
@@ -937,7 +1373,14 @@ int menuPause(int etat){
         myMonstre.life = 50;
         myMonstre2.life = 50;
         myMonstre3.life = 50;
+        myMonstre4.life = 100; 
+        myMonstre5.life = 100; 
+        myMonstre6.life = 100;
+        myMonstre7.life = 100; 
+        myMonstre8.life = 100; 
+        myMonstre9.life = 100;
         myBoss.life = 150;
+        myBoss2.life = 300;
         lifePersonnage = 30;
         myPersonnage.posX = 500;
         myPersonnage.posY = 300;
@@ -965,9 +1408,9 @@ int menuPause(int etat){
       myBoss.deplacementBoss();
       myBoss.afficherNomVie();
       
-      if (myBoss.life <= 0){
+      /*if (myBoss.life <= 0){
         etat = 7;
-      }
+      }*/
       
       return etat;
   }
@@ -992,7 +1435,14 @@ int menuPause(int etat){
       myMonstre.life = 50;
       myMonstre2.life = 50;
       myMonstre3.life = 50;
+      myMonstre4.life = 100; 
+      myMonstre5.life = 100; 
+      myMonstre6.life = 100;
+      myMonstre7.life = 100; 
+      myMonstre8.life = 100; 
+      myMonstre9.life = 100;
       myBoss.life = 150;
+      myBoss2.life = 300;
       lifePersonnage = 30;
       myPersonnage.posX = 500;
       myPersonnage.posY = 300;
@@ -1008,11 +1458,8 @@ int menuPause(int etat){
       image(myPersonnage.img, myPersonnage.posX, myPersonnage.posY);
       image(mannequinImg, 810, 240);
       image(myPnjGuide.img, myPnjGuide.posX = 690, myPnjGuide.posY = 450);
-      image(aide, 70, 360);
       cursor(mouseNoCursorImg);
       noCursor();
-              
-      // personnage
       
       // mannequin
       if (millis() - timerMilliMannequin > 200) {  // en milliseconde 1000 = 1s
@@ -1024,19 +1471,39 @@ int menuPause(int etat){
       myPnjGuide.afficherNom();
       myPnjGuide.conversationGuideDepart();
       
-      if (myBoss.life == 0){ // à finir
-
+      if (myBoss.life <= 0){
+        image(myPnjHommeApeure.img, myPnjHommeApeure.posX = 110, myPnjHommeApeure.posY = 110);
+        myPnjHommeApeure.afficherNom();
+        myPnjHommeApeure.conversationHommeApeure();
       }
       
       return etat;
   }
   if (etat == 9){ // zone du départ maison en haut à gauche
-      etat = 9; // à finir 
+      etat = 9;
+       
+      myPersonnage.stop = true; // permet remise en marche du personnage
+      background(loadImage("../image/maisonDonjon.png"));
+      image(myPersonnage.img, myPersonnage.posX, myPersonnage.posY);
+      cursor(mouseNoCursorImg);
+      noCursor();
+      
+      if (myBoss.life <= 0){
+          background(loadImage("../image/maisonDonjonOuvert.png"));
+          myPersonnage.stop = true;
+          image(myPersonnage.img, myPersonnage.posX, myPersonnage.posY);
+          cursor(mouseNoCursorImg);
+          noCursor();
+      }
+      
+      return etat;
+  }
+  if (etat == 10){ // zone du départ maison en bas à gauche
+      etat = 10;
        
       myPersonnage.stop = true; // permet remise en marche du personnage
       background(maisonInterieurImg);
       image(myPersonnage.img, myPersonnage.posX, myPersonnage.posY);
-      image(aide, 490, 400);
       cursor(mouseNoCursorImg);
       noCursor();
               
@@ -1046,18 +1513,75 @@ int menuPause(int etat){
       
       return etat;
   }
-  if (etat == 10){ // zone du départ maison en bas à gauche
-      etat = 10; // à finir
-       
-      myPersonnage.stop = true; // permet remise en marche du personnage
-      background(maisonInterieurImg);
+  if (etat == 11){ // donjon2
+      etat = 11; 
+     
+      myMonstre4.speed = 10; 
+      myMonstre5.speed = 10; 
+      myMonstre6.speed = 10;
+      myMonstre7.speed = 10; 
+      myMonstre8.speed = 10; 
+      myMonstre9.speed = 10;
+      myPersonnage.stop = true;
+      background(donjon2Img);
+      image(myMonstre4.img, myMonstre4.posX, myMonstre4.posY);
+      image(myMonstre5.img, myMonstre5.posX, myMonstre5.posY);
+      image(myMonstre6.img, myMonstre6.posX, myMonstre6.posY);
+      image(myMonstre7.img, myMonstre7.posX, myMonstre7.posY);
+      image(myMonstre8.img, myMonstre8.posX, myMonstre8.posY);
+      image(myMonstre9.img, myMonstre9.posX, myMonstre9.posY);
+      image(myPersonnage.img, myPersonnage.posX, myPersonnage.posY);
+      cursor(mouseNoCursorImg);
+      noCursor();
+      
+      myDonjon.eauMagique();
+              
+      // personnage
+      myPersonnage.afficherVie();
+              
+      // monstre
+      myMonstre4.deplacementMonstre2();
+      myMonstre5.deplacementMonstre2();
+      myMonstre6.deplacementMonstre2();
+      myMonstre7.deplacementMonstre2();
+      myMonstre8.deplacementMonstre2();
+      myMonstre9.deplacementMonstre2();
+      
+      myMonstre4.afficherNomVie2();
+      myMonstre5.afficherNomVie2();
+      myMonstre6.afficherNomVie2();
+      myMonstre7.afficherNomVie2();
+      myMonstre8.afficherNomVie2();
+      myMonstre9.afficherNomVie2();
+      
+      return etat;
+  }
+  if (etat == 12){ // zone départ attaqué
+      etat = 12;
+     
+     while (myBoss2.life > 299){
+        image(loadImage("../image/pnjDialogue.png"), 160, 470);
+        textSize(15);
+        text("AU SECOURS !!!", 265, 500);
+        text("Nous sommes attaqué ...!", 265, 525);
+        text("Aidez-nous je vous en prie Aventurier !", 265, 550);
+      }
+      
+      myBoss2.speed = 10; 
+      myPersonnage.stop = true;
+      background(zoneDepartImg);
+      image(myBoss2.img, myBoss2.posX, myBoss2.posY);
       image(myPersonnage.img, myPersonnage.posX, myPersonnage.posY);
       cursor(mouseNoCursorImg);
       noCursor();
               
       // personnage
+      myPersonnage.afficherVie();
+              
+      // monstre
+      myBoss2.deplacementBoss2();
       
-      // png
+      myBoss2.afficherNomVie2();
       
       return etat;
   }
