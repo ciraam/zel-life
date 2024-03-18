@@ -19,9 +19,17 @@ class Donjon {
            fill(#FFFFFF);
            textSize(22);
            text("+2", myPersonnage.posX + 30, myPersonnage.posY + 10);
+           if(healSon.isPlaying() == true){
+           
+           }
+           if(healSon.isPlaying() == false){
+              healSon.play();
+              healSon.rate(1.5);
+           }
         }
         if (lifePersonnage >= 30){
            lifePersonnage = 30;
+           healSon.pause();
         }
         this.timerMil = millis();
       }

@@ -1,3 +1,6 @@
+import processing.sound.*;
+SoundFile menuSon, clicSon, swordSon, gameOverSon, winSon, son, healSon, degatPersoSon;
+
 Mouse myMouse;
 Menu myMenuJouer;
 Menu myMenuQuitter;
@@ -23,7 +26,7 @@ Pnj myPnjGuide;
 Pnj myPnjHommeApeure;
 Boss myBoss;
 Boss myBoss2;
-PImage aide;
+//PImage aide;
 PImage persoFaceImg;
 PImage pnjGuideImg;
 PImage pnjHommeApeureImg;
@@ -60,6 +63,7 @@ long timerMin;
 int lifePersonnage;
 
 void setup(){
+  frameRate(60);
   hint(ENABLE_KEY_REPEAT);
   size(1000, 600, P2D);
   timerMilli = millis();  // ne pas toucher pour le bon fonctionnement du jeu, permet d'éviter le bug*
@@ -89,7 +93,6 @@ void setup(){
   
   persoFaceImg = loadImage("../image/persoFace.png");
   myPersonnage = new Personnage("Zel", persoFaceImg);
- 
   // (width-persoFaceImg.width/2), height-persoFaceImg.height-12,
   lifePersonnage = myPersonnage.life;
   
@@ -130,22 +133,50 @@ void setup(){
   maisonInterieurImg = loadImage("../image/maison.png");
   donjon2Img = loadImage("../image/donjon2.png");
   
-  aide = loadImage("../image/effetEauMagique.png");
+  //aide = loadImage("../image/effetEauMagique.png");
+  
+  menuSon = new SoundFile(this, "../son/menuSon.mp3", false);
+  menuSon.amp(0.3);
+  menuSon.loop();
+  son = new SoundFile(this, "", false);
+  son.loop();
+  clicSon = new SoundFile(this, "../son/clicSon.mp3", false);
+  clicSon.amp(0.3);
+  swordSon = new SoundFile(this, "../son/swordSon.mp3", false);
+  swordSon.amp(0.2);
+  gameOverSon = new SoundFile(this, "../son/gameOverSon.mp3", false);
+  gameOverSon.amp(0.3);
+  winSon = new SoundFile(this, "../son/winSon.mp3", false);
+  winSon.amp(0.3);
+  healSon = new SoundFile(this, "../son/healSon.mp3", false);
+  healSon.amp(0.3);
+  degatPersoSon = new SoundFile(this, "../son/degatPersoSon.mp3", false);
+  degatPersoSon.amp(0.1);
 }
 
 void draw(){
+  son.removeFromCache();
   myMouse.posX = pmouseX;
   myMouse.posY = pmouseY;
   //noTint(); // bug² affichage ?
-
+ 
   if (lifePersonnage == 0){
     etat = 5;
   }
   if (gameStatus == true && etat == 4){
     menuPause(etat);
+    if(menuSon.isPlaying() == true){
+       
+    }
+    if(menuSon.isPlaying() == false){
+       menuSon.play();
+    }
     if (testColisionMenu() == 3){
           image(reprendreSurvolImg, myMenuJouer.posX, myMenuJouer.posY);
           if (testColisionMenu() == 3 && mousePressed == true){
+            clicSon.play();
+            ecranChargement();
+            menuSon.pause();
             menuJeu(jeu = 1);
             etat = 8;
             myPersonnage.posX = 600;
@@ -159,6 +190,7 @@ void draw(){
               gameStatus = false;  //  *bug (ou conflit) qui fait que si on fait jouer puis pause puis retour menu principal on quitte directement le jeu sans retourner au menu principal
             } */
             if ((testColisionMenu() == 4 && mousePressed == true)){
+              clicSon.play();
               gameStatus = false;
               //println("Quitter");
             } 
@@ -171,33 +203,56 @@ void draw(){
        menuJeu(jeu = 2);
        timerMin = minute();  
        timerSeconde = second();
+       if(son.isPlaying() == true){
+          
+       }
+       if(son.isPlaying() == false){
+          son = new SoundFile(this, "../son/donjonSon.mp3", false);
+          son.amp(0.3);
+          son.play();
+       }
   }
   if (gameStatus == true && etat == 3) {
        menuPause(etat);
+       son.pause();
        timerMilli = millis();  // ne pas toucher pour le bon fonctionnement du jeu, permet d'éviter le bug*
        if (testColision4(int(myMenuReprendre.posX), int(myMenuReprendre.posY)) == 2){
             image(reprendreSurvolImg, myMenuReprendre.posX, myMenuReprendre.posY);
             //println("Reprendre");
             if (testColision4(int(myMenuReprendre.posX), int(myMenuReprendre.posY)) == 2 && mousePressed == true && jeu == 1){
                   etat = 8;
+                  clicSon.play();
+                  son.play();
              }
             if (testColision4(int(myMenuReprendre.posX), int(myMenuReprendre.posY)) == 2 && mousePressed == true && jeu == 2){
                   etat = 2;
+                  clicSon.play();
+                  son.play();
              }
              if (testColision4(int(myMenuReprendre.posX), int(myMenuReprendre.posY)) == 2 && mousePressed == true && jeu == 3){
                   etat = 6;
+                  clicSon.play();
+                  son.play();
              }
              if (testColision4(int(myMenuReprendre.posX), int(myMenuReprendre.posY)) == 2 && mousePressed == true && jeu == 4){
                   etat = 11;
+                  clicSon.play();
+                  son.play();
              }
              if (testColision4(int(myMenuReprendre.posX), int(myMenuReprendre.posY)) == 2 && mousePressed == true && jeu == 5){
                   etat = 9;
+                  clicSon.play();
+                  son.play();
              }
              if (testColision4(int(myMenuReprendre.posX), int(myMenuReprendre.posY)) == 2 && mousePressed == true && jeu == 6){
                   etat = 10;
+                  clicSon.play();
+                  son.play();
              }
              if (testColision4(int(myMenuReprendre.posX), int(myMenuReprendre.posY)) == 2 && mousePressed == true && jeu == 7){
                   etat = 12;
+                  clicSon.play();
+                  son.play();
              }
         }
         if (testColision4(int(myMenuReprendreMenu.posX), int(myMenuReprendreMenu.posY)) == 2){
@@ -205,11 +260,20 @@ void draw(){
              //println("Menu principal");
              if (testColision4(int(myMenuReprendreMenu.posX), int(myMenuReprendreMenu.posY)) == 2 && mousePressed == true){
                   etat = 4;
+                  clicSon.play();
+                  
               }
          }
          
   }
   if (gameStatus == true && etat == 5) {
+       if(gameOverSon.isPlaying() == true){
+          
+       }
+       if(gameOverSon.isPlaying() == false){
+         son.pause();
+         gameOverSon.play();
+       }
        menuPause(etat);
        timerMilli = millis();  // ne pas toucher pour le bon fonctionnement du jeu, permet d'éviter le bug*
        if (testColisionWinMortMenu() == 1){
@@ -217,6 +281,8 @@ void draw(){
              //println("Menu principal");
              if (testColisionWinMortMenu() == 1 && mousePressed == true){
                   etat = 4;
+                  clicSon.play();
+                  gameOverSon.pause();
               }
         }
   }
@@ -225,8 +291,23 @@ void draw(){
        menuJeu(jeu = 3);
        timerMin = minute();  
        timerSeconde = second();
+       if(son.isPlaying() == true){
+           
+       }
+       if(son.isPlaying() == false){
+          son = new SoundFile(this, "../son/boss2Son.mp3", false);
+          son.amp(0.3);
+          son.play();
+       }
   }
   if (gameStatus == true && etat == 7) {
+       if(winSon.isPlaying() == true){
+          
+       }
+       if(winSon.isPlaying() == false){
+         son.pause();
+         winSon.play();
+       }
        menuPause(etat);
        timerMilli = millis();  // ne pas toucher pour le bon fonctionnement du jeu, permet d'éviter le bug*
        if (testColisionWinMortMenu() == 1){
@@ -234,10 +315,20 @@ void draw(){
              //println("Menu principal");
              if (testColisionWinMortMenu() == 1 && mousePressed == true){
                   etat = 4;
+                  clicSon.play();
+                  winSon.pause();
               }
         }
   }
   if (gameStatus == true && etat == 8) {
+       if(son.isPlaying() == true){
+          
+       }
+       if(son.isPlaying() == false){
+          son = new SoundFile(this, "../son/villageDepartSon.mp3", false);
+          son.amp(0.3);
+          son.play();
+       }
        menuPause(etat);
        menuJeu(jeu = 1);
        timerMin = minute();  
@@ -260,14 +351,30 @@ void draw(){
        menuJeu(jeu = 4);
        timerMin = minute();  
        timerSeconde = second();
+       if(son.isPlaying() == true){
+       
+       }
+       if(son.isPlaying() == false){
+          son = new SoundFile(this, "../son/donjon2Son.mp3", false);
+          son.amp(0.3);
+          son.play();
+       }
   }
   if (gameStatus == true && etat == 12) {
        menuPause(etat);
        menuJeu(jeu = 7);
        timerMin = minute();  
        timerSeconde = second();
+       if(son.isPlaying() == true){
+       
+       }
+       if(son.isPlaying() == false){
+          son = new SoundFile(this, "../son/bossSon.mp3", false);
+          son.amp(0.3);
+          son.play();
+       }
        if (myBoss2.life <= 0){
-         etat = 7; 
+          etat = 7; 
        }
   }
   if (gameStatus == false) {  // à voir pour rajouter une confirmation oui/non
@@ -364,6 +471,7 @@ void keyPressed(){
              //println("Zone");
              etat = 6;
              jeu = 3;
+             son.pause();
              myPersonnage.posX = 925;
              myPersonnage.posY = 400;
              if (myBoss.life > 0 ){
@@ -375,6 +483,7 @@ void keyPressed(){
              //println("Zone");
              etat = 9;
              jeu = 5;
+             son.pause();
              myPersonnage.posX = 595;
              myPersonnage.posY = 115;
          }
@@ -464,6 +573,7 @@ void keyPressed(){
              //println("Zone");
              etat = 2;
              jeu = 2;
+             son.pause();
              myPersonnage.posX = 55;
              myPersonnage.posY = 415;
          }
@@ -553,6 +663,7 @@ void keyPressed(){
              //println("Zone");
              etat = 2;
              jeu = 2;
+             son.pause();
              myPersonnage.posX = 622;
              myPersonnage.posY = 70;
              myPersonnage.img = loadImage("../image/persoFace.png");
@@ -569,6 +680,7 @@ void keyPressed(){
              //println("Zone");
              etat = 8;
              jeu = 1;
+             son.pause();
              myPersonnage.posX = 482;
              myPersonnage.posY = 80;
              myPersonnage.img = loadImage("../image/persoFace.png");
@@ -591,22 +703,21 @@ void keyPressed(){
              //println("Zone");
              etat = 11;
              jeu = 4;
-             if (myMonstre4.life > 0 && myMonstre5.life > 0 && myMonstre6.life > 0 && myMonstre7.life > 0 && myMonstre8.life > 0 && myMonstre9.life > 0){
-               myPersonnage.posX = 90;
-               myPersonnage.posY = 80;
-               myMonstre4.posX = 150;
-               myMonstre4.posY = 200;
-               myMonstre5.posX = 190;
-               myMonstre5.posY = 300;
-               myMonstre6.posX = 100;
-               myMonstre6.posY = 400;
-               myMonstre7.posX = 300;
-               myMonstre7.posY = 250;
-               myMonstre8.posX = 300;
-               myMonstre8.posY = 330;
-               myMonstre9.posX = 300;
-               myMonstre9.posY = 450;
-             }
+             son.pause();
+             myPersonnage.posX = 100;
+             myPersonnage.posY = 100;
+             myMonstre4.posX = 100;
+             myMonstre4.posY = 200;
+             myMonstre5.posX = 100;
+             myMonstre5.posY = 300;
+             myMonstre6.posX = 100;
+             myMonstre6.posY = 400;
+             myMonstre7.posX = 300;
+             myMonstre7.posY = 250;
+             myMonstre8.posX = 300;
+             myMonstre8.posY = 330;
+             myMonstre9.posX = 300;
+             myMonstre9.posY = 450;
          }
       }
       if (keyCode == DOWN){
@@ -694,9 +805,10 @@ void keyPressed(){
              //println("Zone");
              etat = 8;
              jeu = 1;
+             son.pause();
              myPersonnage.posX = 67;
              myPersonnage.posY = 67;
-             if (myMonstre4.life <= 0 && myMonstre5.life <= 0 && myMonstre6.life <= 0 && myMonstre7.life <= 0 && myMonstre8.life <= 0 && myMonstre9.life <= 0){
+             if (myMonstre4.life <= 0 && myMonstre4.life <= 0 && myMonstre4.life <= 0 && myMonstre4.life <= 0 && myMonstre4.life <= 0 && myMonstre4.life <= 0){
                  myBoss2.posX = 400;
                  myBoss2.posY = 250;
                  etat = 12;
@@ -707,6 +819,7 @@ void keyPressed(){
              //println("Zone");
              etat = 8;
              jeu = 1;
+             son.pause();
              myPersonnage.posX = 87;
              myPersonnage.posY = 390;
          }
@@ -717,6 +830,7 @@ void keyPressed(){
       }
       if (key == 'q' || key == 'Q'){  // coup d'épée gauche
            myPersonnage.img = loadImage("../image/swordGauche.png");
+           swordSon.play();
            if (testColision3(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 2){ 
                //println("atck");
                myMonstre.life -= myPersonnage.atk;
@@ -772,13 +886,14 @@ void keyPressed(){
                myBoss2.life -= myPersonnage.atk;
                myBoss2.img = loadImage("../image/boss2Degat.png");
            }
-           if (testColision3(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 13){ 
+           if (testColision3(int(myPersonnage.posX) - myPersonnage.speed, int(myPersonnage.posY)) == 6){ 
                //println("atck");
                mannequinImg = loadImage("../image/mannequinDegat.png");
            }
       }
       if (key == 'z' || key == 'Z'){ // coup d'épée en haut
            myPersonnage.img = loadImage("../image/swordDos.png");
+           swordSon.play();
            if (testColision3(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 2){ 
                //println("atck");
                myMonstre.life -= myPersonnage.atk;
@@ -834,13 +949,14 @@ void keyPressed(){
                myBoss2.life -= myPersonnage.atk;
                myBoss2.img = loadImage("../image/boss2Degat.png");
             }
-            if (testColision3(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 13){ 
+            if (testColision3(int(myPersonnage.posX), int(myPersonnage.posY) - myPersonnage.speed) == 6){ 
                //println("atck");
                mannequinImg = loadImage("../image/mannequinDegat.png");
             }
       }
       if (key == 'd' || key == 'D'){ // coup d'épée en droite
            myPersonnage.img = loadImage("../image/swordDroite.png");
+           swordSon.play();
            if (testColision3(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 2){ 
                //println("atck");
                myMonstre.life -= myPersonnage.atk;
@@ -896,13 +1012,14 @@ void keyPressed(){
                myBoss2.life -= myPersonnage.atk;
                myBoss2.img = loadImage("../image/boss2Degat.png");
             }
-            if (testColision3(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 13){ 
+            if (testColision3(int(myPersonnage.posX) + myPersonnage.speed, int(myPersonnage.posY)) == 6){ 
                //println("atck");
                mannequinImg = loadImage("../image/mannequinDegat.png");
             }
       }
       if (key == 's' || key == 'S'){ // coup d'épée en bas
            myPersonnage.img = loadImage("../image/swordFace.png");
+           swordSon.play();
            if (testColision3(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 2){ 
               //println("atck");
               myMonstre.life -= myPersonnage.atk;
@@ -958,7 +1075,7 @@ void keyPressed(){
               myBoss2.life -= myPersonnage.atk;
               myBoss2.img = loadImage("../image/boss2Degat.png");
            }
-           if (testColision3(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 13){ 
+           if (testColision3(int(myPersonnage.posX),int(myPersonnage.posY) + myPersonnage.speed) == 6){ 
               //println("atck");
               mannequinImg = loadImage("../image/mannequinDegat.png");
            }
@@ -996,56 +1113,67 @@ int testColision (int xTest, int yTest){ // pour le personnage
     }
     if(myMonstre.life > 0 && etat == 2){
       if (xTest > myMonstre.posX - 25 && xTest < myMonstre.posX + 25 && yTest > myMonstre.posY - 45 && yTest < myMonstre.posY + 20){ // colision monstre
+        degatPersoSon.play();
         return 2;
       }
     }
     if(myMonstre2.life > 0 && etat == 2){
       if (xTest > myMonstre2.posX - 25 && xTest < myMonstre2.posX + 25 && yTest > myMonstre2.posY - 45 && yTest < myMonstre2.posY + 20){ // colision monstre2
+        degatPersoSon.play();
         return 3;
       }
     }
     if(myMonstre3.life > 0 && etat == 2){
       if (xTest > myMonstre3.posX - 25 && xTest < myMonstre3.posX + 25 && yTest > myMonstre3.posY - 45 && yTest < myMonstre3.posY + 20){ // colision monstre3
+        degatPersoSon.play();
         return 4;
       }
     }
     if (myBoss.life > 0 && etat == 6){
       if (xTest > myBoss.posX - 14 && xTest < myBoss.posX + 109 && yTest > myBoss.posY - 33 && yTest < myBoss.posY + 63){ // colision boss
+        degatPersoSon.play();
         return 5;
       }
     }
     if (myBoss2.life > 0 && etat == 12){
       if (xTest > myBoss2.posX - 14 && xTest < myBoss2.posX + 109 && yTest > myBoss2.posY - 33 && yTest < myBoss2.posY + 63){ // colision boss2
+        degatPersoSon.play();
         return 6;
       }
     }
     if(myMonstre4.life > 0 && etat == 11){
       if (xTest > myMonstre4.posX - 25 && xTest < myMonstre4.posX + 25 && yTest > myMonstre4.posY - 45 && yTest < myMonstre4.posY + 20){ // colision myMonstre4
+        degatPersoSon.play();
         return 7;
       }
     }
     if(myMonstre5.life > 0 && etat == 11){
       if (xTest > myMonstre5.posX - 25 && xTest < myMonstre5.posX + 25 && yTest > myMonstre5.posY - 45 && yTest < myMonstre5.posY + 20){ // colision myMonstre5
+        degatPersoSon.play();
         return 8;
       }
     }
     if(myMonstre6.life > 0 && etat == 11){
       if (xTest > myMonstre6.posX - 25 && xTest < myMonstre6.posX + 25 && yTest > myMonstre6.posY - 45 && yTest < myMonstre6.posY + 20){ // colision myMonstre6
+        degatPersoSon.play();
         return 9;
       }
     }
     if(myMonstre7.life > 0 && etat == 11){
       if (xTest > myMonstre7.posX - 25 && xTest < myMonstre7.posX + 25 && yTest > myMonstre7.posY - 45 && yTest < myMonstre7.posY + 20){ // colision myMonstre7
+        degatPersoSon.play();
         return 10;
       }
     }
     if(myMonstre8.life > 0 && etat == 11){
       if (xTest > myMonstre8.posX - 25 && xTest < myMonstre8.posX + 25 && yTest > myMonstre8.posY - 45 && yTest < myMonstre8.posY + 20){ // colision myMonstre8
+        degatPersoSon.play();
         return 11;
       }
     }
     if(myMonstre9.life > 0 && etat == 11){
       if (xTest > myMonstre9.posX - 25 && xTest < myMonstre9.posX + 25 && yTest > myMonstre9.posY - 45 && yTest < myMonstre9.posY + 20){ // colision myMonstre9
+        degatPersoSon.play();
         return 12;
       }
     }
@@ -1054,7 +1182,7 @@ int testColision (int xTest, int yTest){ // pour le personnage
         return 6;
      }
    }
-   if (etat == 8 || etat == 12){
+   if (etat == 8){
       if (xTest > 810 - 25 && xTest < 810 + 50 && yTest > 240 - 40 && yTest < 240 + 25){ // colision mannequin
         return 7;
       }
@@ -1131,7 +1259,7 @@ int testColision3 (int xTest, int yTest){ // pour les coups d'épée, range = 15
       return 12;
     }
     if (xTest > 810 - 40 && xTest < 810 + 60 && yTest > 240 - 50 && yTest < 240 + 40){ // hitbox coup d'épée  mannequin
-      return 13;
+      return 6;
     }
     return 0;
 }
@@ -1185,33 +1313,43 @@ int testColisionWinMortMenu(){ // pour mort et win
 }
 int testColisionZone(){ // pour changer de zone
     if (0 > myPersonnage.posX - 45 && 0 < myPersonnage.posX + 45 && 415 > myPersonnage.posY - 45 && 415 < myPersonnage.posY + 45){  // colision entrée porte donjon boss
+      ecranChargement();
       return 1;
     }
     if (990 > myPersonnage.posX - 45 && 990 < myPersonnage.posX + 45 && 400 > myPersonnage.posY - 45 && 400 < myPersonnage.posY + 45){  // colision sortie porte donjon boss 
+      ecranChargement();
       return 2;
     }
     if (495 > myPersonnage.posX - 30 && 495 < myPersonnage.posX + 30 && 0 +10 > myPersonnage.posY - 25 && 0 < myPersonnage.posY + 30){  // colision entrée donjon 
+      ecranChargement();
       return 3;
     }
     if (622 > myPersonnage.posX - 30 && 622 < myPersonnage.posX + 30 && 0+10 > myPersonnage.posY - 25 && 0 < myPersonnage.posY + 30){  // colision sortie donjon 
+      ecranChargement();
       return 4;
     }
     if (60 > myPersonnage.posX - 20 && 60 < myPersonnage.posX + 20 && 0 + 27 > myPersonnage.posY - 25 && 0 < myPersonnage.posY + 30){  // colision entrée maison en haut à gauche 
+      ecranChargement();
       return 5;
     }
     if (497 > myPersonnage.posX - 30 && 497 < myPersonnage.posX + 30 && 400 +5 > myPersonnage.posY - 25 && 400 < myPersonnage.posY + 40){  // colision sortie maison en haut à gauche 
+      ecranChargement();
       return 6;
     }
     if (80 > myPersonnage.posX - 20 && 80 < myPersonnage.posX + 20 && 360 -8 > myPersonnage.posY - 25 && 360 < myPersonnage.posY + 30){  // colision entrée maison en bas à gauche 
+      ecranChargement();
       return 7;
     }
     if (490 > myPersonnage.posX - 20 && 490 < myPersonnage.posX + 20 && 400 +5 > myPersonnage.posY - 25 && 400 < myPersonnage.posY + 30){  // colision sortie maison en bas à gauche 
+      ecranChargement();
       return 8;
     }
     if (595 > myPersonnage.posX - 30 && 595 < myPersonnage.posX + 20 && 100 > myPersonnage.posY - 25 && 100 < myPersonnage.posY + 30){  // colision entrée donjon2
+      ecranChargement();
       return 9;
     }
     if (0 > myPersonnage.posX - 45 && 0 < myPersonnage.posX + 45 && 200 > myPersonnage.posY - 45 && 200 < myPersonnage.posY + 45){  // colision sortie donjon2
+      ecranChargement();
       return 10;
     }
     return 0;
@@ -1219,12 +1357,6 @@ int testColisionZone(){ // pour changer de zone
 int testColisionEauMagique(){ // pour eau magique
     if (837.5 > myPersonnage.posX - 55 && 837.5 < myPersonnage.posX + 30 && 85.5 > myPersonnage.posY - 15 && 85.5 < myPersonnage.posY + 50){  // colision eau magique
       return 1;
-    }
-    return 0;
-}
-int testPnjSOS(){ // pour sos fin
-    if (100 > myPersonnage.posX - 30 && 100 < myPersonnage.posX + 30 && 100 +5 > myPersonnage.posY - 25 && 100 < myPersonnage.posY + 40){
-      return 2;
     }
     return 0;
 }
@@ -1280,7 +1412,6 @@ int menuPause(int etat){
   }
   if (etat == 2){ // donjon
       etat = 2;
-      
       myMonstre.speed = 10; // permet remise en marche du monstre
       myMonstre2.speed = 10; // permet remise en marche du monstre2
       myMonstre3.speed = 10; // permet remise en marche du monstre3
@@ -1295,7 +1426,7 @@ int menuPause(int etat){
       noCursor();
       
       myDonjon.eauMagique();
-              
+    
       // personnage
       myPersonnage.afficherVie();
       
@@ -1320,7 +1451,6 @@ int menuPause(int etat){
   } 
   if (etat == 3){ // pause 
         etat = 3;
-        
         //noLoop();
         myMonstre.speed = 0; // permet l'arrêt du monstre
         myMonstre2.speed = 0; // permet l'arrêt du monstre2
@@ -1339,9 +1469,7 @@ int menuPause(int etat){
     //    image(fondBlancOpaq, 0, 0); bug² ?
         fill(#FFFFFF);
         textSize(60);
-        textAlign(CENTER);
-        text("Pause", 500, 100);  // bug² affichage ?
-        textAlign(LEFT);
+        text("Pause", 425, 100);  // bug² affichage ?
         textSize(30);
         text("Temps passé en jeu : " + str(int(timerMin)) + "min " + str(int(timerSeconde)) + "s", 600, 50);  // bug² affichage ?
         image(myMenuReprendre.img, myMenuReprendre.posX, myMenuReprendre.posY);
@@ -1374,16 +1502,14 @@ int menuPause(int etat){
   }
   if (etat == 5){ // mort personnage
         etat = 5;
-        
         //println("Vous êtes mort");
         cursor(myMouse.img);
         background(0);
         fill(#FFFFFF);
         textSize(50);
-        textAlign(CENTER);
-        text("Vous êtes mort", 505, 200);
+        text("Vous êtes mort", 350, 200);
         image(myMenuReprendreMenu2.img, myMenuReprendreMenu2.posX, myMenuReprendreMenu2.posY);
-        
+  
         // permet de "reload" le jeu
         myMonstre.life = 50;
         myMonstre2.life = 50;
@@ -1415,17 +1541,13 @@ int menuPause(int etat){
       noCursor();
       
       myDonjonBoss.eauMagique();
-              
+
       // personnage
       myPersonnage.afficherVie();
               
       // boss
       myBoss.deplacementBoss();
       myBoss.afficherNomVie();
-      
-      /*if (myBoss.life <= 0){
-        etat = 7;
-      }*/
       
       return etat;
   }
@@ -1436,16 +1558,13 @@ int menuPause(int etat){
       background(0);
       fill(#FFFFFF);
       textSize(47);
-      textAlign(CENTER);
-      text("Félicitation,", 505, 200);
+      text("Félicitation,", 405, 200);
       textSize(41);
-      textAlign(CENTER);
-      text("vous avez gagné !", 505, 260);
-      textAlign(LEFT);
+      text("vous avez gagné !", 400, 260);
       textSize(30);
       text("Temps passé en jeu : " + str(int(timerMin)) + "min " + str(int(timerSeconde)) + "s", 600, 50);
       image(myMenuReprendreMenu2.img, myMenuReprendreMenu2.posX, myMenuReprendreMenu2.posY);
-      
+
       // permet de "reload" le jeu
       myMonstre.life = 50;
       myMonstre2.life = 50;
@@ -1478,10 +1597,10 @@ int menuPause(int etat){
       
       // mannequin
       if (millis() - timerMilliMannequin > 200) {  // en milliseconde 1000 = 1s
-                  mannequinImg = loadImage("../image/mannequin.png");
-                  timerMilliMannequin = millis();
+         mannequinImg = loadImage("../image/mannequin.png");
+         timerMilliMannequin = millis();
       }
-      
+
       // png
       myPnjGuide.afficherNom();
       myPnjGuide.conversationGuideDepart();
@@ -1510,7 +1629,7 @@ int menuPause(int etat){
           cursor(mouseNoCursorImg);
           noCursor();
       }
-      
+
       return etat;
   }
   if (etat == 10){ // zone du départ maison en bas à gauche
@@ -1522,9 +1641,7 @@ int menuPause(int etat){
       cursor(mouseNoCursorImg);
       noCursor();
               
-      // personnage
-      
-      // png
+      // son
       
       return etat;
   }
@@ -1550,7 +1667,7 @@ int menuPause(int etat){
       noCursor();
       
       myDonjon.eauMagique();
-              
+
       // personnage
       myPersonnage.afficherVie();
               
@@ -1574,13 +1691,13 @@ int menuPause(int etat){
   if (etat == 12){ // zone départ attaqué
       etat = 12;
      
-     if (testPnjSOS() == 2){
+     if (myBoss2.life == 300){ // ne marche pas, à voir pour jouer avec les colisions
         image(loadImage("../image/pnjDialogue.png"), 160, 470);
         textSize(15);
         text("AU SECOURS !!!", 265, 500);
         text("Nous sommes attaqué ...!", 265, 525);
         text("Aidez-nous je vous en prie Aventurier !", 265, 550);
-     }
+      }
       
       myBoss2.speed = 10; 
       myPersonnage.stop = true;
@@ -1589,7 +1706,7 @@ int menuPause(int etat){
       image(myPersonnage.img, myPersonnage.posX, myPersonnage.posY);
       cursor(mouseNoCursorImg);
       noCursor();
-              
+
       // personnage
       myPersonnage.afficherVie();
               
@@ -1601,4 +1718,11 @@ int menuPause(int etat){
       return etat;
   }
   return etat;
+}
+
+void ecranChargement(){
+    background(0);
+    fill(#FFFFFF);
+    textSize(35);
+    text("..Loading..", 800, 500);
 }
