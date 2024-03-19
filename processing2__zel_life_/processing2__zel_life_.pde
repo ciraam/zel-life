@@ -139,7 +139,6 @@ void setup(){
   menuSon.amp(0.3);
   menuSon.loop();
   son = new SoundFile(this, "", false);
-  son.loop();
   clicSon = new SoundFile(this, "../son/clicSon.mp3", false);
   clicSon.amp(0.3);
   swordSon = new SoundFile(this, "../son/swordSon.mp3", false);
