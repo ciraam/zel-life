@@ -1,6 +1,6 @@
 # zel-life
 
-lien pour dl :
+lien pour dl
 https://www.dropbox.com/scl/fo/1os68c4tv220oqttadpc8/h?rlkey=m50vbx1o9pnklo244kyp9frdt&dl=0
 
 copie modifiée de Zelda
