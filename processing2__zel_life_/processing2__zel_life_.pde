@@ -1219,6 +1219,7 @@ int testColision2 (int xTest, int yTest){ // pour les monstres
       return 1;
     }
     if (xTest > myPersonnage.posX - 30 && xTest < myPersonnage.posX + 30 && yTest > myPersonnage.posY - 45 && yTest < myPersonnage.posY + 45){  // colision personnage 
+      degatPersoSon.play();
       return 2;
     }
     return 0;
@@ -1275,12 +1276,13 @@ int testColision5 (int xTest, int yTest){ // pour le boss
     if (yTest < 0 || yTest > height-50){
       return 1;
     }
-  /*  if (xTest > myPersonnage.posX - 50 && xTest < myPersonnage.posX + 50 && yTest > myPersonnage.posY - 90 && yTest < myPersonnage.posY + 40){   pas utile (et non fonctionnel ?), à garder sous le coude
+   /* if (xTest > myPersonnage.posX - 50 && xTest < myPersonnage.posX + 50 && yTest > myPersonnage.posY - 90 && yTest < myPersonnage.posY + 40){   //pas utile (et non fonctionnel ?), à garder sous le coude
       return 2;  
-    }                                                                                                             
-    if (xTest > myPersonnage.posX - 14 && xTest < myPersonnage.posX + 103 && yTest > myPersonnage.posY - 28 && yTest < myPersonnage.posY + 58){ 
+    }  */                                                                                                  
+    if (xTest > myPersonnage.posX - 14 && xTest < myPersonnage.posX + 88 && yTest > myPersonnage.posY - 28 && yTest < myPersonnage.posY + 58){
+      degatPersoSon.play();
       return 2; 
-    } */
+    }
     return 0;
 }
 int testColision6 (int xTest, int yTest){ // pour les pnj
