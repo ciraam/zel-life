@@ -1,7 +1,9 @@
 # zel-life
+(ATTENTION: si le jeu ne se lance pas sur le .exe, le relancer)
 
 lien pour dl
-https://www.dropbox.com/scl/fo/1os68c4tv220oqttadpc8/h?rlkey=m50vbx1o9pnklo244kyp9frdt&dl=0
+https://ciraam.dev/index.html#projects
+cliquer sur la fiche du projet "Zel'Life", scroller en bas de la modale et cliquer sur le bouton de téléchargement
 
 copie modifiée de Zelda
 https://docs.google.com/document/d/1Q1bacTlEsOAT5LpIV7BgdRnVU9gkTfc7uRlEsl6DzS0/edit
